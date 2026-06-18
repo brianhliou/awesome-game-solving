@@ -11,67 +11,46 @@ also_known_as:
 family: other
 board: 3×3 grid of 9 points (3 horizontal + 3 vertical + 2 diagonal lines), 3 pieces per side
 result: first-player-win
-result_detail: "First player wins with perfect play, and only by opening in the centre: the centre is the UNIQUE winning first move; the four corners draw and the four edges lose. With the centre opening banned the best remaining opening is a corner, so the game is a draw."
+result_detail: "First player wins with perfect play, and only by opening in the centre: the centre is the unique winning first move; the four corners draw and the four edges lose. With the centre opening banned the game is a draw."
 strength: strong
 method:
   - retrograde-analysis
   - brute-force-enumeration
 distance_to_result: "At most 9 plies total; after the central opening the first player forces the win within 7 further plies."
 complexity:
-  state_space: null   # engine indexes 629,856 (board × men-in-hand × turn) positions; reachable subset is smaller. Trivially small.
+  state_space: null   # trivially small (well under 10^4 reachable positions)
   game_tree: null
-year: 2026
-solved_by: "First-player win known classically (folklore; H. J. R. Murray, 1952). First openly reproducible strong solution — a full tablebase over every position, with the complete opening classification — by Brian Liou via the open-source game-solver engine, 2026."
-cite: "Liou 2026"
+year: null
+solved_by: "Classical result (folklore). The first-player centre win is documented by H. J. R. Murray, A History of Board-Games Other Than Chess (1952), and the game is small enough to verify exhaustively."
+cite: "folklore"
 verified: true
 sources:
-  - title: "Brian Liou — strong solution of three men's morris via the game-solver engine (2026): a full retrograde tablebase over the Tapatan ruleset, with the complete nine-opening classification. Reproducible (cargo test)."
-    url: "https://github.com/brianhliou/awesome-game-solving/tree/main/engine"
-  - title: "Enigmatic Code — Headscratcher #245: Three men's morris (Jim Randell's Python solver of the centre line — a weak solution of the centre opening, 2023)"
-    url: "https://enigmaticcode.wordpress.com/2023/10/28/headscratcher-245-three-mens-morris/"
-  - title: "New Scientist — Headscratcher #245: first player forces a win from the centre (puzzle + solution, Oct/Nov 2023)"
-    url: "https://www.newscientist.com/article/mg26034642-300-headscratcher-245-three-mens-morris/"
-  - title: "Three men's morris (Wikipedia) — winning strategy for the first player unless barred from the centre"
+  - title: "Three men's morris (Wikipedia) — a winning strategy for the first player unless barred from the centre"
     url: "https://en.wikipedia.org/wiki/Three_men's_morris"
   - title: "Three Men's Morris (Cyningstan) — history, rules, and Murray's classification as the 'smaller merels'"
     url: "http://www.cyningstan.com/game/106/three-mens-morris"
+  - title: "Enigmatic Code — Headscratcher #245: a Python solver of the centre line (New Scientist, 2023)"
+    url: "https://enigmaticcode.wordpress.com/2023/10/28/headscratcher-245-three-mens-morris/"
 resources:
   code:
-    - title: "game-solver — generic retrograde-analysis engine (this repository, engine/); three men's morris is a plugin, solved and tested in CI"
+    - title: "game-solver (this repository, engine/) — an open retrograde solver that reproduces the result and the full opening classification"
       url: "https://github.com/brianhliou/awesome-game-solving/tree/main/engine"
-  writeup:
-    - title: "Enigmatic Code — exhaustive analysis of the three men's morris centre line (Python solver)"
-      url: "https://enigmaticcode.wordpress.com/2023/10/28/headscratcher-245-three-mens-morris/"
 notes: >
   Three men's morris is the "movement" extension of three-in-a-row (it is to
-  tic-tac-toe what nine men's morris is to a placement-only mill game). Each
-  player has three pieces. PLACEMENT PHASE: players alternately place their three
-  pieces. MOVEMENT PHASE: if no line has formed, players alternately slide a piece
-  to an adjacent point. A player wins by getting their three pieces on one of the
-  eight lines (3 rows, 3 columns, 2 diagonals), or by leaving the opponent with no
-  legal move.
+  tic-tac-toe what nine men's morris is to a placement-only mill game). Each player
+  places three pieces, then slides them; a player wins by getting all three on a
+  line (or leaving the opponent with no move).
 
-  STRENGTH — strongly solved (this project). We computed the game-theoretic value
-  of every reachable position with the game-solver engine (retrograde analysis
-  over the Tapatan ruleset: the 3×3 board with diagonals as both mill lines and
-  move connections). Result: the first player wins; the centre is the UNIQUE
-  winning opening, the four corners draw, and the four edges LOSE for the first
-  player. This upgrades the prior record: the earlier published work (Jim Randell's
-  New Scientist #245 solver, 2023) only weakly solved the centre line — it
-  hard-codes the centre opening and searches that subtree. Ours is the first
-  openly reproducible full-tablebase solution we found, and the first to classify
-  all nine openings. The movement phase admits repetition, so most positions are
-  drawn by non-progress; the solver resolves those correctly (a value for every
-  position, not just the start).
+  This is a trivial game — well under 10^4 positions, strongly solvable by
+  inspection — so its standing here is the same as tic-tac-toe's: a classically
+  known result, no solving credit claimed. The first player wins, and only by
+  taking the centre: corners draw and edges lose; with the centre opening banned
+  the game is a draw (which is why most informal rule-sets ban it). The
+  first-player centre win has been understood as folklore for centuries (the board
+  appears in the 1283 Libro de los juegos and in far older carvings); Murray (1952)
+  is the classical reference.
 
-  RESULT / RULESET CAVEAT: the value depends on whether the centre opening is
-  allowed. Centre allowed ⇒ first-player win (the headline). Centre banned ⇒ the
-  best opening is a corner, which draws — which is why most informal rule-sets ban
-  the first-player centre. The "draw" some popular sources quote describes that
-  restricted variant.
-
-  ATTRIBUTION: the first-player centre win has been understood as folklore for
-  centuries (the board appears in the 1283 Libro de los juegos and in far older
-  carvings); H. J. R. Murray (1952) is the classical reference. Our contribution
-  is the strong solution and the full opening classification, both reproducible
-  from the engine.
+  This project's open solver (engine/, the Tapatan ruleset) reproduces the result
+  and contributes the full opening classification (centre wins uniquely; corners
+  draw; edges lose). It is listed only as a reproducible verifier — the game is too
+  trivial to claim as a solve.

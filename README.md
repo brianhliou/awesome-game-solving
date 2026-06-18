@@ -29,6 +29,7 @@ Three strengths, from weakest to strongest ([Wikipedia](https://en.wikipedia.org
 <!-- BEGIN GENERATED:solved-games — source of truth is data/games/*.yaml; regenerate with `npm run build`. Do not hand-edit this table. -->
 | Game | Result under perfect play | Strength | Year | Source |
 |---|---|---|---|---|
+| Three men's morris | First player wins | Strong | — | [folklore](https://en.wikipedia.org/wiki/Three_men's_morris) |
 | Tic-tac-toe | Draw | Strong | — | [folklore](https://mathworld.wolfram.com/Tic-Tac-Toe.html) |
 | Nim | First player wins | Strong | 1901 | [Bouton 1901](https://www.jstor.org/stable/1967631) |
 | Wythoff's game | First player wins | Strong | 1907 | [Wythoff 1907](https://www.scirp.org/reference/referencespapers?referenceid=59121) |
@@ -60,7 +61,6 @@ Three strengths, from weakest to strongest ([Wikipedia](https://en.wikipedia.org
 | Losing chess | First player wins | Weak | 2016 | [Watkins 2016](https://content.iospress.com/articles/icga-journal/icg170017) |
 | Othello | Draw | Weak | 2023 | [Takizawa 2023](https://arxiv.org/abs/2310.19387) |
 | Quarto! | Draw | Strong | 2023 | [Goossens 2023](https://doi.org/10.5281/zenodo.20425801) |
-| Three men's morris | First player wins | Strong | 2026 | [Liou 2026](https://github.com/brianhliou/awesome-game-solving/tree/main/engine) |
 <!-- END GENERATED:solved-games -->
 
 Hex is also *ultra-weakly* solved for every board size: the first player wins by strategy stealing ([Nash, 1952](https://en.wikipedia.org/wiki/Hex_(board_game))), with no explicit strategy. On 10×10 only a single opening has been solved so far.
