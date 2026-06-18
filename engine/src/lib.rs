@@ -9,6 +9,9 @@
 //! This is the same shape as GAMESMAN / OpenSpiel / Ludii: one solver, many games.
 
 pub mod games;
+pub mod reachable;
+
+pub use reachable::{solve_reachable, solve_reachable_capped, ReachableSolution, RulesGame};
 
 /// The game-theoretic value of a position, from the perspective of the side to move.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]

@@ -4,7 +4,7 @@
 
 use game_solver::games::three_mens_morris::Pos;
 use game_solver::games::ThreeMensMorris;
-use game_solver::{solve, Game, Outcome};
+use game_solver::{solve, solve_reachable, Game, Outcome};
 
 const BLACK: u8 = 2;
 
@@ -21,6 +21,16 @@ fn first_player_wins() {
     let game = ThreeMensMorris;
     let tb = solve(&game);
     assert_eq!(tb.value(game.index(&game.start())), Outcome::Win);
+}
+
+#[test]
+fn reachable_solver_agrees_with_dense_solver() {
+    // The index-free reachable solver must reproduce the dense solver's verdict.
+    let game = ThreeMensMorris;
+    let dense = solve(&game);
+    let reachable = solve_reachable(&game);
+    assert_eq!(reachable.get(&game.start()), Some(Outcome::Win));
+    assert_eq!(reachable.get(&game.start()), Some(dense.value(game.index(&game.start()))));
 }
 
 #[test]

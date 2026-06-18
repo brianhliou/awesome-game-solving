@@ -8,7 +8,7 @@
 //! The mill lines and adjacency are the eight tic-tac-toe lines; adjacency is the
 //! king-move graph they induce (centre connects to all eight).
 
-use crate::{Game, Outcome};
+use crate::{Game, Outcome, RulesGame};
 
 const EMPTY: u8 = 0;
 const WHITE: u8 = 1; // first player
@@ -30,7 +30,7 @@ const LINES: [[usize; 3]; 8] = [
 // the lines above): centre (4) touches all eight; corners/edges touch three.
 const ADJ: [u16; 9] = [26, 21, 50, 81, 495, 276, 152, 336, 176];
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub struct Pos {
     pub cells: [u8; 9],
     pub w_hand: u8, // white men not yet placed
@@ -185,5 +185,20 @@ impl Game for ThreeMensMorris {
             return Some(Outcome::Loss);
         }
         None
+    }
+}
+
+// Also expose the rules through the index-free solver, so it can be cross-checked
+// against the dense `solve` (both must agree the start is a win).
+impl RulesGame for ThreeMensMorris {
+    type State = Pos;
+    fn start(&self) -> Pos {
+        Game::start(self)
+    }
+    fn successors(&self, s: &Pos) -> Vec<Pos> {
+        Game::successors(self, s)
+    }
+    fn terminal(&self, s: &Pos) -> Option<Outcome> {
+        Game::terminal(self, s)
     }
 }
