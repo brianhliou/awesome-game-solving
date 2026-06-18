@@ -31,6 +31,7 @@ Three strengths, from weakest to strongest ([Wikipedia](https://en.wikipedia.org
 |---|---|---|---|---|
 | Three men's morris | First player wins | Strong | — | [folklore](https://en.wikipedia.org/wiki/Three_men's_morris) |
 | Tic-tac-toe | Draw | Strong | — | [folklore](https://mathworld.wolfram.com/Tic-Tac-Toe.html) |
+| Maharajah and the Sepoys | Second player wins | Weak | 1892 | [Falkener 1892](https://archive.org/details/gamesancientorie00falkuoft) |
 | Nim | First player wins | Strong | 1901 | [Bouton 1901](https://www.jstor.org/stable/1967631) |
 | Wythoff's game | First player wins | Strong | 1907 | [Wythoff 1907](https://www.scirp.org/reference/referencespapers?referenceid=59121) |
 | Hexapawn | Second player wins | Strong | 1962 | [Gardner 1962](https://people.csail.mit.edu/brooks/idocs/GardnerHexapawn.pdf) |
@@ -41,6 +42,7 @@ Three strengths, from weakest to strongest ([Wikipedia](https://en.wikipedia.org
 | Nine Men's Morris | Draw | Strong | 1993 | [Gasser 1993](https://library.slmath.org/books/Book29/files/gasser.pdf) |
 | Connect Four | First player wins | Strong | 1995 | [Tromp 1995](https://tromp.github.io/c4/connect4_thesis.pdf) |
 | Pentominoes (two-player) | First player wins | Weak | 1996 | [Orman 1996](https://library.slmath.org/books/Book29/files/orman.pdf) |
+| Teeko | Draw | Strong | 1998 | [Steele 1998](https://boardgamegeek.com/thread/816476/steele-guy-november-23-1998-re-teeko-hakmem) |
 | Kalah | First player wins | Weak | 2000 | [Irving et al. 2000](https://naml.us/paper/kalah/) |
 | Renju (連珠) | First player wins | Weak | 2001 | [Wágner et al. 2001](https://journals.sagepub.com/doi/abs/10.3233/ICG-2001-24104) |
 | Awari (Oware) | Draw | Strong | 2002 | [Romein et al. 2002](https://doi.org/10.1109/MC.2003.1236468) |
@@ -53,6 +55,7 @@ Three strengths, from weakest to strongest ([Wikipedia](https://en.wikipedia.org
 | [Dōbutsu shōgi](#worked-example-dōbutsu-shōgi) | Second player wins | Strong | 2009 | [Tanaka 2009](https://ipsj.ixsq.nii.ac.jp/records/62415) · [worked example below](#worked-example-dōbutsu-shōgi) |
 | Gardner minichess | Draw | Weak | 2013 | [Mhalla et al. 2013](https://arxiv.org/abs/1307.7118) |
 | Hex (9×9, all openings) | First player wins | Weak | 2013 | [Pawlewicz et al. 2013](https://webdocs.cs.ualberta.ca/~hayward/papers/pawlhayw.pdf) |
+| Dots and Boxes | First player wins | Weak | 2014 | [Fraser 2014](https://groups.google.com/g/rec.games.abstract/c/-z5Y9JRlZJ8) |
 | Pentago | First player wins | Strong | 2014 | [Irving 2014](https://arxiv.org/abs/1404.0743) |
 | Amazons (small boards) | First player wins | Weak | 2015 | [Song et al. 2015](https://webdocs.cs.ualberta.ca/~mmueller/ps/2014/2014-TCIAIG-amazons_solver-preprint.pdf) |
 | Heads-up Limit Texas Hold'em (HULHE) | First player wins (ε-Nash) | Weak, approx. | 2015 | [Bowling et al. 2015](https://www.science.org/doi/10.1126/science.1259433) |

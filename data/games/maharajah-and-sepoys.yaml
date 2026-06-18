@@ -19,7 +19,7 @@ complexity:
   game_tree: null
 year: 1892
 solved_by: "Edward Falkener (first published Western analysis of the Sepoys' winning method, 1892); the forced-win strategy is further documented by Hans L. Bodlaender (The Chess Variant Pages) and D. B. Pritchard (Encyclopedia of Chess Variants)"
-verified: false
+verified: true
 sources:
   - title: "Edward Falkener, Games Ancient and Oriental, and how to Play Them, Longmans, Green and Co. (1892), 'The Game of the Maharajah and the Sepoys', pp. 217-224 (full text, Internet Archive)"
     url: "https://archive.org/details/gamesancientorie00falkuoft"

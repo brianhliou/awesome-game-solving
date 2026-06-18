@@ -16,7 +16,8 @@ complexity:
   game_tree: null
 year: 1998
 solved_by: "Guy L. Steele Jr. (Sun Microsystems Laboratories)"
-verified: false
+cite: "Steele 1998"
+verified: true
 sources:
   - title: "Guy L. Steele Jr. — \"Re: Teeko, HAKMEM\", Usenet posting, 23 Nov 1998 (primary writeup of the full solution; archived/indexed via BoardGameGeek)"
     url: "https://boardgamegeek.com/thread/816476/steele-guy-november-23-1998-re-teeko-hakmem"

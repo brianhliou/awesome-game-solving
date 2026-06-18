@@ -21,7 +21,7 @@ complexity:
   game_tree: null
 year: 2014
 solved_by: "William Fraser (5x5, program 'the Shark'); 4x4 by David Wilson (2010); 4x5 by Joseph K. Barker & Richard E. Korf (2011)"
-verified: false
+verified: true
 sources:
   - title: "William Fraser, \"Dots at 5x5 solved!\" announcement (rec.games.abstract / Little Golem, Jan 2014) — the Shark, first player wins 13-12"
     url: "https://groups.google.com/g/rec.games.abstract/c/-z5Y9JRlZJ8"
