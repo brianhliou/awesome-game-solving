@@ -1,0 +1,14 @@
+# Internal strategy and planning — never published
+docs-private/
+
+# OS
+.DS_Store
+
+# Site / build output (future)
+_site/
+node_modules/
+dist/
+
+# Data build artifacts
+data/.cache/
+*.tmp

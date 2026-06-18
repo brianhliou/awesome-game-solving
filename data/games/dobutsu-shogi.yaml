@@ -1,0 +1,39 @@
+id: dobutsu-shogi
+name: Dōbutsu shōgi
+also_known_as:
+  - "Let's Catch the Lion!"
+family: shogi-variant
+board: 3×4
+result: second-player-win
+result_detail: "Gote (second player) wins"
+strength: strong
+method:
+  - retrograde-analysis
+distance_to_result: "78 plies from the start"
+complexity:
+  state_space: 246803167   # reachable positions (Liou)
+  game_tree: null
+year: 2009                 # original solution — VERIFY attribution/year
+solved_by: "Tetsurō Tanaka"  # VERIFY against primary source
+verified: false
+sources:
+  - title: "Dōbutsu shōgi (Wikipedia)"
+    url: "https://en.wikipedia.org/wiki/D%C5%8Dbutsu_sh%C5%8Dgi"
+resources:
+  tablebase:
+    - title: "brianhliou/dobutsu-shogi — from-scratch Rust tablebase (333 MB .ctb via MPH)"
+      url: "https://github.com/brianhliou/dobutsu-shogi"
+    - title: "clausecker/dobutsu — C reference tablebase"
+      url: "https://github.com/clausecker/dobutsu"
+  explorer:
+    - title: "Live lichess-style explorer over the full solution"
+      url: "https://dobutsu.brianhliou.com"
+  writeup:
+    - title: "From-scratch solution writeup"
+      url: "https://brianhliou.com/posts/dobutsu-shogi/"
+notes: >
+  The repo's flagship worked example: full retrograde → tablebase → probe →
+  explorer pipeline, independently rebuilt and verified against the clausecker
+  reference (50,000 positions, zero mismatches). state_space is reachable
+  positions as computed by Liou; the original solution attribution (solved_by,
+  year) is unverified and is one of the items the research run resolves.
