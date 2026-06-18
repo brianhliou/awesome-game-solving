@@ -11,81 +11,67 @@ also_known_as:
 family: other
 board: 3×3 grid of 9 points (3 horizontal + 3 vertical + 2 diagonal lines), 3 pieces per side
 result: first-player-win
-result_detail: "First player wins with perfect play by opening in the centre; if the centre opening is banned, neither side can force a win (effectively a draw)"
-strength: weak
+result_detail: "First player wins with perfect play, and only by opening in the centre: the centre is the UNIQUE winning first move; the four corners draw and the four edges lose. With the centre opening banned the best remaining opening is a corner, so the game is a draw."
+strength: strong
 method:
-  - minimax-search
+  - retrograde-analysis
   - brute-force-enumeration
-distance_to_result: "At most 9 plies total; the first player forces a win in at most 7 plies after the central opening (i.e. by Alpha's 5th / 4 further Alpha moves)"
+distance_to_result: "At most 9 plies total; after the central opening the first player forces the win within 7 further plies."
 complexity:
-  state_space: null   # no single canonical citable figure; trivially small (<10^4 reachable placements), exhaustively enumerable
+  state_space: null   # engine indexes 629,856 (board × men-in-hand × turn) positions; reachable subset is smaller. Trivially small.
   game_tree: null
-year: null
-solved_by: "classical hand analysis (folklore; H. J. R. Murray, A History of Board-Games Other Than Chess, 1952); confirmed by exhaustive computer game-tree search (Jim Randell, New Scientist Headscratcher #245, 2023)"
-verified: false
+year: 2026
+solved_by: "First-player win known classically (folklore; H. J. R. Murray, 1952). First openly reproducible strong solution — a full tablebase over every position, with the complete opening classification — by Brian Liou via the open-source game-solver engine, 2026."
+cite: "Liou 2026"
+verified: true
 sources:
-  - title: "New Scientist — Headscratcher #245: Three men's morris (puzzle, Oct 2023) and #245 Solution (Nov 1 2023): first player forces a win from the centre"
-    url: "https://www.newscientist.com/article/mg26034642-300-headscratcher-245-three-mens-morris/"
-  - title: "Enigmatic Code — Headscratcher #245: Three men's morris (Jim Randell's exhaustive game-tree Python solver confirming the first-player forced win)"
+  - title: "Brian Liou — strong solution of three men's morris via the game-solver engine (2026): a full retrograde tablebase over the Tapatan ruleset, with the complete nine-opening classification. Reproducible (cargo test)."
+    url: "https://github.com/brianhliou/awesome-game-solving/tree/main/engine"
+  - title: "Enigmatic Code — Headscratcher #245: Three men's morris (Jim Randell's Python solver of the centre line — a weak solution of the centre opening, 2023)"
     url: "https://enigmaticcode.wordpress.com/2023/10/28/headscratcher-245-three-mens-morris/"
+  - title: "New Scientist — Headscratcher #245: first player forces a win from the centre (puzzle + solution, Oct/Nov 2023)"
+    url: "https://www.newscientist.com/article/mg26034642-300-headscratcher-245-three-mens-morris/"
   - title: "Three men's morris (Wikipedia) — winning strategy for the first player unless barred from the centre"
     url: "https://en.wikipedia.org/wiki/Three_men's_morris"
-  - title: "Three Men's Morris (Ways To Play / games.porg.es) — playing to the centre is a forced win for the first player, so the centre opening is usually banned"
-    url: "https://games.porg.es/games/three-mens-morris/"
   - title: "Three Men's Morris (Cyningstan) — history, rules, and Murray's classification as the 'smaller merels'"
     url: "http://www.cyningstan.com/game/106/three-mens-morris"
 resources:
+  code:
+    - title: "game-solver — generic retrograde-analysis engine (this repository, engine/); three men's morris is a plugin, solved and tested in CI"
+      url: "https://github.com/brianhliou/awesome-game-solving/tree/main/engine"
   writeup:
-    - title: "Enigmatic Code — exhaustive analysis of the three men's morris endgame (Python solver)"
+    - title: "Enigmatic Code — exhaustive analysis of the three men's morris centre line (Python solver)"
       url: "https://enigmaticcode.wordpress.com/2023/10/28/headscratcher-245-three-mens-morris/"
 notes: >
   Three men's morris is the "movement" extension of three-in-a-row (it is to
   tic-tac-toe what nine men's morris is to a placement-only mill game). Each
-  player has three pieces. PLACEMENT PHASE: players alternately place their
-  three pieces on empty points; if neither has made a line, the game enters the
-  MOVEMENT PHASE in which players alternately slide one piece to an empty point.
-  A player wins by getting their three pieces onto one of the eight lines
-  (3 rows, 3 columns, 2 diagonals). Two movement rulesets exist: pieces move to
-  ANY vacant point (the common rule), or only to an ADJACENT linked vacant point
-  (Murray's stricter "smaller merels" rule). The headline result holds in the
-  standard unrestricted game.
+  player has three pieces. PLACEMENT PHASE: players alternately place their three
+  pieces. MOVEMENT PHASE: if no line has formed, players alternately slide a piece
+  to an adjacent point. A player wins by getting their three pieces on one of the
+  eight lines (3 rows, 3 columns, 2 diagonals), or by leaving the opponent with no
+  legal move.
 
-  RESULT AND RULESET CAVEAT (the central subtlety): under unrestricted standard
-  rules the FIRST PLAYER WINS — opening in the centre is a forced win. Because
-  this makes the natural opening dominant, most informal rule-sets BAN the
-  first-player centre opening; with that restriction neither side can force a
-  win and the game is effectively a DRAW. So the value depends entirely on
-  whether the centre opening is allowed: centre allowed => first-player win;
-  centre banned => draw. The headline fields record the standard (centre-allowed)
-  game. Some popular sources loosely call the (centre-banned) game "a draw with
-  perfect play"; that describes the restricted variant, not the unrestricted one.
+  STRENGTH — strongly solved (this project). We computed the game-theoretic value
+  of every reachable position with the game-solver engine (retrograde analysis
+  over the Tapatan ruleset: the 3×3 board with diagonals as both mill lines and
+  move connections). Result: the first player wins; the centre is the UNIQUE
+  winning opening, the four corners draw, and the four edges LOSE for the first
+  player. This upgrades the prior record: the earlier published work (Jim Randell's
+  New Scientist #245 solver, 2023) only weakly solved the centre line — it
+  hard-codes the centre opening and searches that subtree. Ours is the first
+  openly reproducible full-tablebase solution we found, and the first to classify
+  all nine openings. The movement phase admits repetition, so most positions are
+  drawn by non-progress; the solver resolves those correctly (a value for every
+  position, not just the start).
 
-  STRENGTH: classified "weak" (downgraded from an earlier "strong" draft). The
-  game is trivially small (well under 10^4 reachable arrangements of 3+3 pieces on
-  9 points), so a STRONG solution is feasible in principle — but the cited
-  evidence does not establish one. Jim Randell's solver (New Scientist
-  Headscratcher #245, 2023) HARD-CODES the first player's centre opening and only
-  searches the resulting subtree; it proves a winning strategy FROM THE START
-  (a weak solution of the centre line), not a value for every reachable position,
-  so no full tablebase / strong solution is on record. An exhaustive all-positions
-  solve would qualify as strong but has not been published for this game.
+  RESULT / RULESET CAVEAT: the value depends on whether the centre opening is
+  allowed. Centre allowed ⇒ first-player win (the headline). Centre banned ⇒ the
+  best opening is a corner, which draws — which is why most informal rule-sets ban
+  the first-player centre. The "draw" some popular sources quote describes that
+  restricted variant.
 
-  DISTANCE: the entire game is at most 9 moves (5 by the first player "Alpha",
-  4 by the second player "Zoe"); after the central opening the first player
-  forces the win within 7 more plies. The New Scientist published answer phrases
-  this as "Alpha can win in four more moves" (counting only Alpha's own moves).
-
-  COMPLEXITY: no single canonical citable state-space / game-tree figure is
-  published (the game is too trivially small to have entered the standard
-  "Games solved" complexity tables); both fields are left null rather than
-  guessed. State space is on the order of a few thousand reachable positions.
-
-  ATTRIBUTION: there is no single primary "solver" paper — the first-player
-  forced win from the centre has been understood as folklore/strategic knowledge
-  for centuries (the board appears in the 1283 Libro de los juegos of Alfonso X
-  and in far older Egyptian/Roman carvings). H. J. R. Murray's "A History of
-  Board-Games Other Than Chess" (1952) is the classical scholarly reference and
-  source of the "smaller merels"/"nine holes" classification. The most concrete,
-  reproducible modern confirmation is the exhaustive computer analysis in the
-  New Scientist Headscratcher #245 puzzle and Jim Randell's accompanying solver
-  (2023). Wikipedia and the hobby/history pages are secondary restatements.
+  ATTRIBUTION: the first-player centre win has been understood as folklore for
+  centuries (the board appears in the 1283 Libro de los juegos and in far older
+  carvings); H. J. R. Murray (1952) is the classical reference. Our contribution
+  is the strong solution and the full opening classification, both reproducible
+  from the engine.

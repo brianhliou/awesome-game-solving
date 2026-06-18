@@ -22,7 +22,7 @@ interface Game {
   result: 'first-player-win' | 'second-player-win' | 'draw'
   strength: 'ultra-weak' | 'weak' | 'strong'
   approximate?: boolean
-  board?: string; year: number | null; solved_by: string; verified: boolean
+  board?: string; year: number | null; solved_by: string; cite?: string; verified: boolean
   sources: Source[]
 }
 
@@ -52,7 +52,7 @@ function cite(g: Game): { label: string; url: string } {
   const surname = tokens.slice(i).join(' ').replace(/\.$/, '')
   const folklore = /folklore|classical hand analysis/i.test(head)
   const multi = /&| and |,|et al/i.test(authors)
-  const label = folklore ? 'folklore' : `${surname}${multi ? ' et al.' : ''}${g.year ? ` ${g.year}` : ''}`
+  const label = g.cite ?? (folklore ? 'folklore' : `${surname}${multi ? ' et al.' : ''}${g.year ? ` ${g.year}` : ''}`)
   const url = (g.sources.find((s) => s.primary) ?? g.sources[0])?.url ?? REPO
   return { label, url }
 }

@@ -26,6 +26,7 @@ interface Game {
   approximate?: boolean
   year: number | null
   solved_by: string
+  cite?: string // optional short citation label for the table (overrides derivation)
   verified: boolean
   sources: Source[]
 }
@@ -60,9 +61,11 @@ function cite(g: Game): string {
   const head = authors.split(/,|&| and /)[0].trim()
   const isFolklore = /folklore|classical hand analysis/i.test(head)
   const multi = /&| and |,|et al/i.test(authors)
-  const label = isFolklore
-    ? 'folklore'
-    : `${surnameOf(head)}${multi ? ' et al.' : ''}${g.year ? ` ${g.year}` : ''}`
+  const label =
+    g.cite ??
+    (isFolklore
+      ? 'folklore'
+      : `${surnameOf(head)}${multi ? ' et al.' : ''}${g.year ? ` ${g.year}` : ''}`)
   const url = (g.sources.find((s) => s.primary) ?? g.sources[0])?.url
   const link = url ? `[${label}](${url})` : label
   // Dōbutsu shōgi is the flagship worked example — cross-link it.

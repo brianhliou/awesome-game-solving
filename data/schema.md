@@ -20,6 +20,7 @@ One YAML file per solved game, at `games/<id>.yaml`.
 | `complexity.game_tree` | no | integer or null |
 | `year` | yes | year of the solution |
 | `solved_by` | yes | person or team |
+| `cite` | no | short label for the generated tables (e.g. "Tanaka 2009"); overrides the label auto-derived from `solved_by`. Use when `solved_by` is prose. |
 | `verified` | yes | bool; true once checked against the primary source |
 | `sources` | yes | list of `{title, url}`; primary source first |
 | `resources` | no | `{tablebase, code, explorer, writeup}`, each a list of `{title, url}` |
