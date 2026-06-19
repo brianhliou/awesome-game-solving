@@ -15,3 +15,7 @@ data/.cache/
 
 # Rust engine build output
 target/
+
+# Tablebase artifacts — shipped as release assets, never committed
+artifacts/
+*.wld

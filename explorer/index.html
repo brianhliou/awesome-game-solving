@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Six Men's Morris — perfect-play explorer</title>
+    <meta
+      name="description"
+      content="Play six men's morris against a perfect-play tablebase. Every position and move is labelled win, loss, or draw — the first published strong solution."
+    />
+  </head>
+  <body>
+    <main id="app">
+      <header>
+        <h1>Six Men's Morris — solved</h1>
+        <p class="sub">
+          A draw with perfect play, strongly solved over all 42,372,745 reachable
+          positions. Every move below is labelled by its game-theoretic value.
+        </p>
+      </header>
+
+      <div class="layout">
+        <div class="board-wrap">
+          <svg id="board" viewBox="-0.6 -0.6 7.2 7.2" aria-label="morris board"></svg>
+        </div>
+
+        <aside class="panel">
+          <div id="eval" class="eval">Loading tablebase…</div>
+          <div class="controls">
+            <button id="undo" disabled>Undo</button>
+            <button id="reset">Reset</button>
+            <label class="toggle"><input type="checkbox" id="hints" checked /> Show move values</label>
+          </div>
+          <div class="legend">
+            <span class="chip win">winning</span>
+            <span class="chip draw">drawing</span>
+            <span class="chip loss">losing</span>
+          </div>
+          <p id="hint" class="hint"></p>
+          <p class="credit">
+            Solved by the open-source
+            <a href="https://github.com/brianhliou/awesome-game-solving/tree/main/engine">game-solver</a>
+            engine. No flying; standard six men's rules.
+          </p>
+        </aside>
+      </div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
