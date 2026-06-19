@@ -94,3 +94,19 @@ fn dense_side5_first_player_wins_no_draws() {
     assert_eq!(dense.value_at(Game::index(&game, &Game::start(&game))), Outcome::Win);
     assert_eq!(dense.count(Outcome::Draw), 0, "dense side-5: Y admits no draws");
 }
+
+/// The slice-by-slice solver must agree with the trusted dense solver on the full
+/// index aggregate (every position is counted, win/loss totals match) and on the
+/// start value — the validation that licenses running it on side-6.
+#[test]
+fn sliced_matches_dense_aggregate() {
+    for n in 1..=5 {
+        let game = Y::new(n);
+        let dense = solve_dense(&game, |_, _| {});
+        let sliced = game.solve_sliced(|_, _| {});
+        assert_eq!(sliced.total, game.num_states(), "side-{n}: slices cover the whole index");
+        assert_eq!(sliced.wins, dense.count(Outcome::Win), "side-{n}: win totals agree");
+        assert_eq!(sliced.losses, dense.count(Outcome::Loss), "side-{n}: loss totals agree");
+        assert_eq!(sliced.start, Outcome::Win, "side-{n}: first player wins");
+    }
+}

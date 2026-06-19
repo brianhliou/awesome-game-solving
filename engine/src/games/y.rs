@@ -257,3 +257,83 @@ impl Game for Y {
         self.outcome(p)
     }
 }
+
+/// The result of a slice-by-slice solve: the start value and aggregate counts over
+/// the full tight index, with a per-ply breakdown.
+pub struct SlicedSolution {
+    pub start: Outcome,
+    pub total: u64,
+    pub wins: u64,
+    pub losses: u64,
+    /// `(ply m, slice size, wins, losses)`, ply-ascending.
+    pub per_slice: Vec<(usize, u64, u64, u64)>,
+}
+
+impl Y {
+    /// Strongly solve Y by a single backward sweep over the ply-slices, holding only
+    /// two adjacent slices in memory (peak ≈ twice the largest slice). Y's monotone
+    /// fill makes the position graph acyclic and layered — every successor of a
+    /// ply-`m` position lies in ply `m+1` — so solving from the full board down to
+    /// the empty board needs no fixpoint iteration. This is what reaches side-6
+    /// (2.17B positions) on a laptop where the global dense solver would not.
+    ///
+    /// There is no draw branch (Y cannot draw); a non-terminal position with no
+    /// move (a full board that fails to connect — i.e. a board-model bug) trips an
+    /// assertion rather than silently resolving.
+    pub fn solve_sliced(&self, mut report: impl FnMut(usize, u64)) -> SlicedSolution {
+        assert!(!self.slices.is_empty(), "Y::solve_sliced: dense index unavailable (cells > 32)");
+        const WIN: u8 = 1;
+        const LOSS: u8 = 2;
+        let cells = self.cells;
+
+        let mut next: Vec<u8> = Vec::new(); // values of slice m+1, local-indexed
+        let mut per_slice = vec![(0usize, 0u64, 0u64, 0u64); cells + 1];
+        let (mut total_w, mut total_l) = (0u64, 0u64);
+
+        for m in (0..=cells).rev() {
+            let offset = self.slices[m].offset;
+            let next_offset = if m < cells { self.slices[m + 1].offset } else { self.num };
+            let size = (next_offset - offset) as usize;
+            let mut cur = vec![0u8; size];
+            let (mut w, mut l) = (0u64, 0u64);
+
+            for local in 0..size {
+                let p = self.from_index(offset + local as u64).expect("slice index decodes");
+                let v = if self.outcome(&p).is_some() {
+                    // Terminal: the opponent just connected, so the side to move lost.
+                    LOSS
+                } else {
+                    let succ = self.moves(&p);
+                    assert!(!succ.is_empty(), "non-terminal Y position with no move — board model bug");
+                    let next_off = self.slices[m + 1].offset;
+                    // Win iff some move hands the opponent a losing position.
+                    let mut any_loss = false;
+                    for ns in &succ {
+                        let nidx = (self.index(ns) - next_off) as usize;
+                        if next[nidx] == LOSS {
+                            any_loss = true;
+                            break;
+                        }
+                    }
+                    if any_loss { WIN } else { LOSS }
+                };
+                cur[local] = v;
+                if v == WIN {
+                    w += 1;
+                } else {
+                    l += 1;
+                }
+            }
+
+            total_w += w;
+            total_l += l;
+            per_slice[m] = (m, size as u64, w, l);
+            report(m, size as u64);
+            next = cur; // slice m becomes the "next" slice for m-1
+        }
+
+        // After the sweep, `next` holds slice 0: the single empty-board position.
+        let start = if next[0] == WIN { Outcome::Win } else { Outcome::Loss };
+        SlicedSolution { start, total: total_w + total_l, wins: total_w, losses: total_l, per_slice }
+    }
+}
