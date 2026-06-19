@@ -50,7 +50,7 @@
   <header>
     <h1>Solved Games</h1>
     <p class="tagline">The canonical reference for solved games: every known result, the method that produced it, and the code to verify it.</p>
-    <p class="meta">36 solved games · 17 strongly solved · 9 families · citation-gated · <a href="https://github.com/brianhliou/solved-games" rel="noopener">source &amp; contribute on GitHub →</a></p>
+    <p class="meta">36 solved games · 17 strongly solved · 11 genres · citation-gated · <a href="https://github.com/brianhliou/solved-games" rel="noopener">source &amp; contribute on GitHub →</a></p>
   </header>
 
   <section class="featured">
@@ -69,8 +69,8 @@
   </section>
 
   <div class="controls">
-    <input id="q" type="search" placeholder="Search games, solvers, families…" aria-label="Search">
-    <select id="family" aria-label="Filter by family"><option value="">All families</option><option value="abstract">abstract</option><option value="chess-variant">chess-variant</option><option value="combinatorial">combinatorial</option><option value="connection">connection</option><option value="go">go</option><option value="imperfect-info">imperfect-info</option><option value="mancala">mancala</option><option value="other">other</option><option value="shogi-variant">shogi-variant</option></select>
+    <input id="q" type="search" placeholder="Search games, solvers, methods…" aria-label="Search">
+    <select id="genre" aria-label="Filter by genre"><option value="">All genres</option><option value="alignment">Alignment &amp; m,n,k games</option><option value="morris">Morris / mill family</option><option value="connection">Connection games</option><option value="mancala">Mancala</option><option value="capture">Capture &amp; board control</option><option value="chess">Chess &amp; chess variants</option><option value="hunt">Hunt &amp; unequal forces</option><option value="cgt">Combinatorial game theory</option><option value="shogi">Shogi variants</option><option value="go">Go</option><option value="imperfect-info">Imperfect information</option></select>
     <select id="strength" aria-label="Filter by strength">
       <option value="">All strengths</option><option value="strong">Strong</option><option value="weak">Weak</option><option value="ultra-weak">Ultra-weak</option>
     </select>
@@ -79,296 +79,332 @@
   <table id="registry">
     <thead><tr>
       <th data-sort="game">Game</th><th data-sort="result">Result</th><th data-sort="strength">Strength</th>
-      <th data-sort="year" class="num">Year</th><th data-sort="family">Family</th><th>Source</th>
+      <th data-sort="method">Method</th><th data-sort="year" class="num">Year</th><th data-sort="genre">Genre</th><th>Source</th>
     </tr></thead>
     <tbody>
-        <tr data-family="other" data-strength="strong" data-search="three men's morris other classical result (folklore). the first-player centre win is documented by h. j. r. murray, a history of board-games other than chess (1952), and the game is small enough to verify exhaustively.">
+        <tr data-genre="morris" data-strength="strong" data-search="three men's morris morris / mill family retrograde analysis classical result (folklore). the first-player centre win is documented by h. j. r. murray, a history of board-games other than chess (1952), and the game is small enough to verify exhaustively.">
           <td class="game">Three men's morris<span class="board">3×3 grid of 9 points (3 horizontal + 3 vertical + 2 diagonal lines), 3 pieces per side</span></td>
           <td>First player wins</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">—</td>
-          <td><span class="fam">other</span></td>
+          <td><span class="fam">Morris / mill family</span></td>
           <td><a href="https://en.wikipedia.org/wiki/Three_men's_morris" rel="noopener">folklore</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="strong" data-search="tic-tac-toe abstract folklore (no single originator); standard combinatorial-game-theory references — hales &amp; jewett, gardner, steinhaus">
+        <tr data-genre="alignment" data-strength="strong" data-search="tic-tac-toe alignment &amp; m,n,k games brute-force enumeration folklore (no single originator); standard combinatorial-game-theory references — hales &amp; jewett, gardner, steinhaus">
           <td class="game">Tic-tac-toe<span class="board">3×3 (m,n,k = 3,3,3)</span></td>
           <td>Draw</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Brute-force enumeration</td>
           <td class="num">—</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Alignment &amp; m,n,k games</span></td>
           <td><a href="https://mathworld.wolfram.com/Tic-Tac-Toe.html" rel="noopener">folklore</a></td>
         </tr>
-        <tr data-family="chess-variant" data-strength="weak" data-search="maharajah and the sepoys chess-variant edward falkener (first published western analysis of the sepoys' winning method, 1892); the forced-win strategy is further documented by hans l. bodlaender (the chess variant pages) and d. b. pritchard (encyclopedia of chess variants)">
+        <tr data-genre="hunt" data-strength="weak" data-search="maharajah and the sepoys hunt &amp; unequal forces knowledge-based edward falkener (first published western analysis of the sepoys' winning method, 1892); the forced-win strategy is further documented by hans l. bodlaender (the chess variant pages) and d. b. pritchard (encyclopedia of chess variants)">
           <td class="game">Maharajah and the Sepoys<span class="board">Standard 8x8 chessboard. Black (&quot;sepoys&quot;) has the full orthodox 16-piece army in the normal starting position; White has a single piece, the maharajah, starting on e1, that moves on its turn as either a queen or a knight (the &quot;amazon&quot; compound). The maharajah is royal (must escape check); Black's pawns cannot promote in the usual rendering. No castling for the lone maharajah.</span></td>
           <td>Second player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Knowledge-based</td>
           <td class="num">1892</td>
-          <td><span class="fam">chess-variant</span></td>
+          <td><span class="fam">Hunt &amp; unequal forces</span></td>
           <td><a href="https://archive.org/details/gamesancientorie00falkuoft" rel="noopener">Falkener 1892</a></td>
         </tr>
-        <tr data-family="combinatorial" data-strength="strong" data-search="nim combinatorial charles l. bouton (harvard university)">
+        <tr data-genre="cgt" data-strength="strong" data-search="nim combinatorial game theory mathematical proof charles l. bouton (harvard university)">
           <td class="game">Nim<span class="board">Several heaps (piles) of counters; players alternately remove one or more counters from a single heap. Classic three-heap demonstration uses heaps of 3, 5, 7.</span></td>
           <td>First player wins</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Mathematical proof</td>
           <td class="num">1901</td>
-          <td><span class="fam">combinatorial</span></td>
+          <td><span class="fam">Combinatorial game theory</span></td>
           <td><a href="https://www.jstor.org/stable/1967631" rel="noopener">Bouton 1901</a></td>
         </tr>
-        <tr data-family="combinatorial" data-strength="strong" data-search="wythoff's game combinatorial willem abraham wythoff">
+        <tr data-genre="cgt" data-strength="strong" data-search="wythoff's game combinatorial game theory mathematical proof willem abraham wythoff">
           <td class="game">Wythoff's game<span class="board">Two heaps of counters (unbounded, non-negative integer sizes)</span></td>
           <td>First player wins</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Mathematical proof</td>
           <td class="num">1907</td>
-          <td><span class="fam">combinatorial</span></td>
+          <td><span class="fam">Combinatorial game theory</span></td>
           <td><a href="https://www.scirp.org/reference/referencespapers?referenceid=59121" rel="noopener">Wythoff 1907</a></td>
         </tr>
-        <tr data-family="other" data-strength="strong" data-search="hexapawn other martin gardner">
+        <tr data-genre="chess" data-strength="strong" data-search="hexapawn chess &amp; chess variants brute-force enumeration martin gardner">
           <td class="game">Hexapawn<span class="board">3x3 (standard); generalizes to n x m rectangular boards (e.g. 4x4 'octopawn')</span></td>
           <td>Second player wins</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Brute-force enumeration</td>
           <td class="num">1962</td>
-          <td><span class="fam">other</span></td>
+          <td><span class="fam">Chess &amp; chess variants</span></td>
           <td><a href="https://people.csail.mit.edu/brooks/idocs/GardnerHexapawn.pdf" rel="noopener">Gardner 1962</a></td>
         </tr>
-        <tr data-family="other" data-strength="strong" data-search="sim other ernest mead, alexander rosa &amp; charlotte huang (explicit second-player strategy); independently and strongly/ultra-strongly solved by wolfgang slany (1999)">
+        <tr data-genre="cgt" data-strength="strong" data-search="sim combinatorial game theory brute-force enumeration ernest mead, alexander rosa &amp; charlotte huang (explicit second-player strategy); independently and strongly/ultra-strongly solved by wolfgang slany (1999)">
           <td class="game">Sim<span class="board">Complete graph K6 (6 vertices, 15 edges); each player colors edges in their own color</span></td>
           <td>Second player wins</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Brute-force enumeration</td>
           <td class="num">1974</td>
-          <td><span class="fam">other</span></td>
+          <td><span class="fam">Combinatorial game theory</span></td>
           <td><a href="https://www.tandfonline.com/doi/abs/10.1080/0025570X.1974.11976415" rel="noopener">Mead et al. 1974</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="weak" data-search="qubic abstract oren patashnik">
+        <tr data-genre="alignment" data-strength="weak" data-search="qubic alignment &amp; m,n,k games knowledge-based oren patashnik">
           <td class="game">Qubic<span class="board">4×4×4 cube (64 cells, 76 winning lines)</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Knowledge-based</td>
           <td class="num">1980</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Alignment &amp; m,n,k games</span></td>
           <td><a href="https://www.jstor.org/stable/2689613" rel="noopener">Patashnik 1980</a></td>
         </tr>
-        <tr data-family="other" data-strength="strong" data-search="mū tōrere other marcia ascher (1987) with philip straffin's game-tree expansion; position graphs by philip d. straffin (1995, corrected 1996); full game-graph solve of all rulesets by cameron browne (2022); independent computational strong solve by gamescrafters (uc berkeley)">
+        <tr data-genre="capture" data-strength="strong" data-search="mū tōrere capture &amp; board control brute-force enumeration marcia ascher (1987) with philip straffin's game-tree expansion; position graphs by philip d. straffin (1995, corrected 1996); full game-graph solve of all rulesets by cameron browne (2022); independent computational strong solve by gamescrafters (uc berkeley)">
           <td class="game">Mū tōrere<span class="board">Eight-pointed star: 8 outer points (kewai) arranged in a ring, each joined to its two neighbours and to a central point (pūtahi); 9 cells total. Four pieces per player, placed on the eight outer points (the centre starts empty).</span></td>
           <td>Draw</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Brute-force enumeration</td>
           <td class="num">1987</td>
-          <td><span class="fam">other</span></td>
+          <td><span class="fam">Capture &amp; board control</span></td>
           <td><a href="https://www.tandfonline.com/doi/abs/10.1080/0025570X.1987.11977283" rel="noopener">Ascher 1987</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="weak" data-search="gomoku (free-style) abstract l. victor allis, h. jaap van den herik, m. p. h. huntjens">
+        <tr data-genre="alignment" data-strength="weak" data-search="gomoku (free-style) alignment &amp; m,n,k games threat-space search l. victor allis, h. jaap van den herik, m. p. h. huntjens">
           <td class="game">Gomoku (free-style)<span class="board">15×15</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Threat-space search</td>
           <td class="num">1993</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Alignment &amp; m,n,k games</span></td>
           <td><a href="https://aaai.org/papers/0001-go-moku-solved-by-new-search-techniques/" rel="noopener">Allis et al. 1993</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="strong" data-search="nine men's morris abstract ralph gasser (eth zurich)">
+        <tr data-genre="morris" data-strength="strong" data-search="nine men's morris morris / mill family retrograde analysis ralph gasser (eth zurich)">
           <td class="game">Nine Men's Morris<span class="board">24-point morris board (three concentric squares joined by midpoint connectors), 9 stones per player</span></td>
           <td>Draw</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">1993</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Morris / mill family</span></td>
           <td><a href="https://library.slmath.org/books/Book29/files/gasser.pdf" rel="noopener">Gasser 1993</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="strong" data-search="connect four abstract john tromp (strong solution, 8-ply wdl database, 1995); independently weakly solved earlier by james d. allen (oct 1, 1988) and victor allis (oct 16, 1988)">
+        <tr data-genre="alignment" data-strength="strong" data-search="connect four alignment &amp; m,n,k games brute-force enumeration john tromp (strong solution, 8-ply wdl database, 1995); independently weakly solved earlier by james d. allen (oct 1, 1988) and victor allis (oct 16, 1988)">
           <td class="game">Connect Four<span class="board">7x6 (7 columns wide, 6 rows high), gravity drop</span></td>
           <td>First player wins</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Brute-force enumeration</td>
           <td class="num">1995</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Alignment &amp; m,n,k games</span></td>
           <td><a href="https://tromp.github.io/c4/connect4_thesis.pdf" rel="noopener">Tromp 1995</a></td>
         </tr>
-        <tr data-family="combinatorial" data-strength="weak" data-search="pentominoes (two-player) combinatorial hilarie k. orman">
+        <tr data-genre="cgt" data-strength="weak" data-search="pentominoes (two-player) combinatorial game theory brute-force enumeration hilarie k. orman">
           <td class="game">Pentominoes (two-player)<span class="board">8×8 board, 12 distinct (free) pentomino pieces</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Brute-force enumeration</td>
           <td class="num">1996</td>
-          <td><span class="fam">combinatorial</span></td>
+          <td><span class="fam">Combinatorial game theory</span></td>
           <td><a href="https://library.slmath.org/books/Book29/files/orman.pdf" rel="noopener">Orman 1996</a></td>
         </tr>
-        <tr data-family="other" data-strength="strong" data-search="teeko other guy l. steele jr. (sun microsystems laboratories)">
+        <tr data-genre="alignment" data-strength="strong" data-search="teeko alignment &amp; m,n,k games retrograde analysis guy l. steele jr. (sun microsystems laboratories)">
           <td class="game">Teeko<span class="board">5×5 board (25 cells); each player has 4 markers</span></td>
           <td>Draw</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">1998</td>
-          <td><span class="fam">other</span></td>
+          <td><span class="fam">Alignment &amp; m,n,k games</span></td>
           <td><a href="https://boardgamegeek.com/thread/816476/steele-guy-november-23-1998-re-teeko-hakmem" rel="noopener">Steele 1998</a></td>
         </tr>
-        <tr data-family="mancala" data-strength="weak" data-search="kalah mancala geoffrey irving, jeroen donkers, jos uiterwijk">
+        <tr data-genre="mancala" data-strength="weak" data-search="kalah mancala alpha-beta + db geoffrey irving, jeroen donkers, jos uiterwijk">
           <td class="game">Kalah<span class="board">Two rows of 6 holes plus two stores (kalahah); standard commercial game starts with 4 seeds per hole — Kalah(6,4). Notation Kalah(m,n) = m holes per side, n initial seeds per hole.</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Alpha-beta + DB</td>
           <td class="num">2000</td>
-          <td><span class="fam">mancala</span></td>
+          <td><span class="fam">Mancala</span></td>
           <td><a href="https://naml.us/paper/kalah/" rel="noopener">Irving et al. 2000</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="weak" data-search="renju (連珠) abstract jános wágner &amp; istván virág">
+        <tr data-genre="alignment" data-strength="weak" data-search="renju (連珠) alignment &amp; m,n,k games threat-space search jános wágner &amp; istván virág">
           <td class="game">Renju (連珠)<span class="board">15x15 grid (stones on intersections); Black plays first and must open on the center point h8</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Threat-space search</td>
           <td class="num">2001</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Alignment &amp; m,n,k games</span></td>
           <td><a href="https://journals.sagepub.com/doi/abs/10.3233/ICG-2001-24104" rel="noopener">Wágner et al. 2001</a></td>
         </tr>
-        <tr data-family="mancala" data-strength="strong" data-search="awari (oware) mancala john w. romein &amp; henri e. bal (vrije universiteit amsterdam)">
+        <tr data-genre="mancala" data-strength="strong" data-search="awari (oware) mancala retrograde analysis john w. romein &amp; henri e. bal (vrije universiteit amsterdam)">
           <td class="game">Awari (Oware)<span class="board">2×6 pits, 4 seeds per pit (48 seeds total)</span></td>
           <td>Draw</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">2002</td>
-          <td><span class="fam">mancala</span></td>
+          <td><span class="fam">Mancala</span></td>
           <td><a href="https://doi.org/10.1109/MC.2003.1236468" rel="noopener">Romein et al. 2002</a></td>
         </tr>
-        <tr data-family="go" data-strength="weak" data-search="go (5×5) go erik c. d. van der werf (program migos), with h. jaap van den herik and jos w. h. m. uiterwijk">
+        <tr data-genre="go" data-strength="weak" data-search="go (5×5) go alpha-beta + db erik c. d. van der werf (program migos), with h. jaap van den herik and jos w. h. m. uiterwijk">
           <td class="game">Go (5×5)<span class="board">5x5 square Go board (25 intersections)</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Alpha-beta + DB</td>
           <td class="num">2002</td>
-          <td><span class="fam">go</span></td>
+          <td><span class="fam">Go</span></td>
           <td><a href="https://journals.sagepub.com/doi/10.3233/ICG-2003-26205" rel="noopener">van der Werf 2002</a></td>
         </tr>
-        <tr data-family="connection" data-strength="weak" data-search="hex (7×7) connection jing yang, simon liao &amp; mirek pawlak (first explicit hand strategy, 2001–2002); first full computer solution of all 49 openings by ryan b. hayward, yngvi björnsson, michael johanson, morgan kan, nathan po &amp; jack van rijswijck (university of alberta, 2003)">
+        <tr data-genre="connection" data-strength="weak" data-search="hex (7×7) connection games strategy-stealing jing yang, simon liao &amp; mirek pawlak (first explicit hand strategy, 2001–2002); first full computer solution of all 49 openings by ryan b. hayward, yngvi björnsson, michael johanson, morgan kan, nathan po &amp; jack van rijswijck (university of alberta, 2003)">
           <td class="game">Hex (7×7)<span class="board">7×7 rhombus of hexagonal cells (49 cells); each player owns two opposite sides, first player connects their pair; no-swap (no pie rule) ruleset</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Strategy-stealing</td>
           <td class="num">2003</td>
-          <td><span class="fam">connection</span></td>
+          <td><span class="fam">Connection games</span></td>
           <td><a href="https://webdocs.cs.ualberta.ca/~hayward/papers/solving7x7hex.pdf" rel="noopener">Yang et al. 2003</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="strong" data-search="lasker morris abstract peter stahlhacke (friedrich-schiller-universität jena); re-confirmed and extended by gábor e. gévay &amp; gábor danner (2014/2016)">
+        <tr data-genre="morris" data-strength="strong" data-search="lasker morris morris / mill family retrograde analysis peter stahlhacke (friedrich-schiller-universität jena); re-confirmed and extended by gábor e. gévay &amp; gábor danner (2014/2016)">
           <td class="game">Lasker Morris<span class="board">Nine Men's Morris board (24 points / intersections, no diagonals); 10 men per player (both Stahlhacke's headline 136-billion-position database and Gévay &amp; Danner solve the ten-men variant, per Lasker's &quot;nine or better ten&quot;)</span></td>
           <td>Draw</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">2003</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Morris / mill family</span></td>
           <td><a href="https://althofer.de/stahlhacke-lasker-morris-2003.pdf" rel="noopener">Stahlhacke 2003</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="weak" data-search="checkers (english draughts) abstract jonathan schaeffer, neil burch, yngvi björnsson, akihiro kishimoto, martin müller, robert lake, paul lu, steve sutphen (university of alberta; chinook project)">
+        <tr data-genre="capture" data-strength="weak" data-search="checkers (english draughts) capture &amp; board control retrograde analysis jonathan schaeffer, neil burch, yngvi björnsson, akihiro kishimoto, martin müller, robert lake, paul lu, steve sutphen (university of alberta; chinook project)">
           <td class="game">Checkers (English draughts)<span class="board">8x8 board, pieces on dark squares only (32 playable squares)</span></td>
           <td>Draw</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">2007</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Capture &amp; board control</span></td>
           <td><a href="https://www.science.org/doi/10.1126/science.1144079" rel="noopener">Schaeffer et al. 2007</a></td>
         </tr>
-        <tr data-family="other" data-strength="weak" data-search="fanorona other maarten p. d. schadd, mark h. m. winands, jos w. h. m. uiterwijk, h. jaap van den herik, maurice h. j. bergsma (micc-ikat games and ai group, universiteit maastricht)">
+        <tr data-genre="capture" data-strength="weak" data-search="fanorona capture &amp; board control proof-number search maarten p. d. schadd, mark h. m. winands, jos w. h. m. uiterwijk, h. jaap van den herik, maurice h. j. bergsma (micc-ikat games and ai group, universiteit maastricht)">
           <td class="game">Fanorona<span class="board">5x9 (Fanoron-Tsivy), 45 intersections of lines; 22 pieces per side at start</span></td>
           <td>Draw</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Proof-number search</td>
           <td class="num">2007</td>
-          <td><span class="fam">other</span></td>
+          <td><span class="fam">Capture &amp; board control</span></td>
           <td><a href="https://dke.maastrichtuniversity.nl/m.winands/documents/Fanorona.pdf" rel="noopener">Schadd et al. 2007</a></td>
         </tr>
-        <tr data-family="other" data-strength="weak" data-search="tigers and goats other lim yew jin and jürg nievergelt (national university of singapore; eth zurich)">
+        <tr data-genre="hunt" data-strength="weak" data-search="tigers and goats hunt &amp; unequal forces retrograde analysis lim yew jin and jürg nievergelt (national university of singapore; eth zurich)">
           <td class="game">Tigers and Goats<span class="board">5x5 grid of 25 points connected by horizontal, vertical and diagonal lines (Bagh-Chal board). Asymmetric: 4 tigers (start on the 4 corner points) face up to 20 goats. Goat moves first.</span></td>
           <td>Draw</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">2007</td>
-          <td><span class="fam">other</span></td>
+          <td><span class="fam">Hunt &amp; unequal forces</span></td>
           <td><a href="https://library.slmath.org/books/Book56/files/22jin.pdf" rel="noopener">Jin et al. 2007</a></td>
         </tr>
-        <tr data-family="shogi-variant" data-strength="strong" data-search="dōbutsu shōgi shogi-variant tetsurō tanaka (田中 哲朗), university of tokyo">
+        <tr data-genre="shogi" data-strength="strong" data-search="dōbutsu shōgi shogi variants retrograde analysis tetsurō tanaka (田中 哲朗), university of tokyo">
           <td class="game">Dōbutsu shōgi<span class="board">3×4 (3 files × 4 ranks)</span></td>
           <td>Second player wins</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">2009</td>
-          <td><span class="fam">shogi-variant</span></td>
+          <td><span class="fam">Shogi variants</span></td>
           <td><a href="https://ipsj.ixsq.nii.ac.jp/records/62415" rel="noopener">Tanaka 2009</a></td>
         </tr>
-        <tr data-family="chess-variant" data-strength="weak" data-search="gardner minichess chess-variant mehdi mhalla and frédéric prost">
+        <tr data-genre="chess" data-strength="weak" data-search="gardner minichess chess &amp; chess variants knowledge-based mehdi mhalla and frédéric prost">
           <td class="game">Gardner minichess<span class="board">5x5 (smallest board holding all standard chess piece types on the back rank)</span></td>
           <td>Draw</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Knowledge-based</td>
           <td class="num">2013</td>
-          <td><span class="fam">chess-variant</span></td>
+          <td><span class="fam">Chess &amp; chess variants</span></td>
           <td><a href="https://arxiv.org/abs/1307.7118" rel="noopener">Mhalla et al. 2013</a></td>
         </tr>
-        <tr data-family="connection" data-strength="weak" data-search="hex (9×9, all openings) connection jakub pawlewicz &amp; ryan b. hayward (building on henderson, arneson &amp; hayward for 8×8 and yang, liao &amp; pawlak / hayward et al. for 7×7)">
+        <tr data-genre="connection" data-strength="weak" data-search="hex (9×9, all openings) connection games depth-first pns jakub pawlewicz &amp; ryan b. hayward (building on henderson, arneson &amp; hayward for 8×8 and yang, liao &amp; pawlak / hayward et al. for 7×7)">
           <td class="game">Hex (9×9, all openings)<span class="board">9×9 rhombus of hexagonal cells (81 cells); two opposite sides per player, first player connects their pair; no-swap (no pie rule) ruleset</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Depth-first PNS</td>
           <td class="num">2013</td>
-          <td><span class="fam">connection</span></td>
+          <td><span class="fam">Connection games</span></td>
           <td><a href="https://webdocs.cs.ualberta.ca/~hayward/papers/pawlhayw.pdf" rel="noopener">Pawlewicz et al. 2013</a></td>
         </tr>
-        <tr data-family="combinatorial" data-strength="weak" data-search="dots and boxes combinatorial william fraser (5x5, program 'the shark'); 4x4 by david wilson (2010); 4x5 by joseph k. barker &amp; richard e. korf (2011)">
+        <tr data-genre="cgt" data-strength="weak" data-search="dots and boxes combinatorial game theory alpha-beta + db william fraser (5x5, program 'the shark'); 4x4 by david wilson (2010); 4x5 by joseph k. barker &amp; richard e. korf (2011)">
           <td class="game">Dots and Boxes<span class="board">Rectangular grids, sized in boxes. Headline result is the 5x5 board (5x5 = 25 boxes, played on a 6x6 array of dots). Solved instances range from tiny boards up through 4x4 (Wilson), 4x5 (Barker &amp; Korf) and 5x5 (Fraser).</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Alpha-beta + DB</td>
           <td class="num">2014</td>
-          <td><span class="fam">combinatorial</span></td>
+          <td><span class="fam">Combinatorial game theory</span></td>
           <td><a href="https://groups.google.com/g/rec.games.abstract/c/-z5Y9JRlZJ8" rel="noopener">Fraser 2014</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="strong" data-search="pentago abstract geoffrey irving">
+        <tr data-genre="alignment" data-strength="strong" data-search="pentago alignment &amp; m,n,k games retrograde analysis geoffrey irving">
           <td class="game">Pentago<span class="board">6×6 with four rotatable 3×3 quadrants</span></td>
           <td>First player wins</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">2014</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Alignment &amp; m,n,k games</span></td>
           <td><a href="https://arxiv.org/abs/1404.0743" rel="noopener">Irving 2014</a></td>
         </tr>
-        <tr data-family="combinatorial" data-strength="weak" data-search="amazons (small boards) combinatorial jiaxing song and martin müller (5x6 and other rectangular boards); martin müller (5x5, 2001)">
+        <tr data-genre="cgt" data-strength="weak" data-search="amazons (small boards) combinatorial game theory alpha-beta + db jiaxing song and martin müller (5x6 and other rectangular boards); martin müller (5x5, 2001)">
           <td class="game">Amazons (small boards)<span class="board">5x6 rectangular grid (headline); also solved: 4x4, 5x5, 4x5, 5x4, 4x6, 4x7, 6x4</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Alpha-beta + DB</td>
           <td class="num">2015</td>
-          <td><span class="fam">combinatorial</span></td>
+          <td><span class="fam">Combinatorial game theory</span></td>
           <td><a href="https://webdocs.cs.ualberta.ca/~mmueller/ps/2014/2014-TCIAIG-amazons_solver-preprint.pdf" rel="noopener">Song et al. 2015</a></td>
         </tr>
-        <tr data-family="imperfect-info" data-strength="weak" data-search="heads-up limit texas hold'em (hulhe) imperfect-info michael bowling, neil burch, michael johanson, oskari tammelin (university of alberta computer poker research group; cepheus project)">
+        <tr data-genre="imperfect-info" data-strength="weak" data-search="heads-up limit texas hold'em (hulhe) imperfect information monte-carlo cfr michael bowling, neil burch, michael johanson, oskari tammelin (university of alberta computer poker research group; cepheus project)">
           <td class="game">Heads-up Limit Texas Hold'em (HULHE)<span class="board">Two-player limit Texas hold'em; 52-card deck, four betting rounds (preflop/flop/turn/river), fixed bet sizes, capped raises per round, alternating dealer/button</span></td>
           <td>First player wins <span class="eps">(ε-Nash)</span></td>
           <td><span class="badge s-weak">weak (approx.)</span></td>
+          <td>Monte-Carlo CFR</td>
           <td class="num">2015</td>
-          <td><span class="fam">imperfect-info</span></td>
+          <td><span class="fam">Imperfect information</span></td>
           <td><a href="https://www.science.org/doi/10.1126/science.1259433" rel="noopener">Bowling et al. 2015</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="strong" data-search="morabaraba abstract gábor e. gévay (eötvös loránd university) &amp; gábor danner (university of szeged); arxiv:1408.0032 (2014), published ieee trans. on computational intelligence and ai in games, 2016">
+        <tr data-genre="morris" data-strength="strong" data-search="morabaraba morris / mill family retrograde analysis gábor e. gévay (eötvös loránd university) &amp; gábor danner (university of szeged); arxiv:1408.0032 (2014), published ieee trans. on computational intelligence and ai in games, 2016">
           <td class="game">Morabaraba<span class="board">Nine Men's Morris board with the four diagonal lines added (24 points / intersections, all corners of the three nested squares connected by diagonals); 12 men per player</span></td>
           <td>First player wins</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">2015</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Morris / mill family</span></td>
           <td><a href="https://arxiv.org/abs/1408.0032" rel="noopener">Gévay 2015</a></td>
         </tr>
-        <tr data-family="combinatorial" data-strength="weak" data-search="domineering combinatorial jos w. h. m. uiterwijk (11x11, program mudos); earlier instances by breuker, uiterwijk &amp; van den herik (8x8, 2000), nathan bullock (10x10, 2002); rectangular families by lachmann, moore &amp; rapaport">
+        <tr data-genre="cgt" data-strength="weak" data-search="domineering combinatorial game theory alpha-beta + db jos w. h. m. uiterwijk (11x11, program mudos); earlier instances by breuker, uiterwijk &amp; van den herik (8x8, 2000), nathan bullock (10x10, 2002); rectangular families by lachmann, moore &amp; rapaport">
           <td class="game">Domineering<span class="board">Square and rectangular grids; headline result is 11x11. Solved instances range from 1x1 up to 11x11 squares plus many m x n rectangles.</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Alpha-beta + DB</td>
           <td class="num">2016</td>
-          <td><span class="fam">combinatorial</span></td>
+          <td><span class="fam">Combinatorial game theory</span></td>
           <td><a href="https://arxiv.org/abs/1602.05404" rel="noopener">Uiterwijk 2016</a></td>
         </tr>
-        <tr data-family="chess-variant" data-strength="weak" data-search="losing chess chess-variant mark watkins (university of sydney, school of mathematics and statistics)">
+        <tr data-genre="chess" data-strength="weak" data-search="losing chess chess &amp; chess variants proof-number search mark watkins (university of sydney, school of mathematics and statistics)">
           <td class="game">Losing chess<span class="board">Standard 8x8 chessboard, orthodox starting position; captures compulsory, non-royal king, no castling, promotion to king allowed</span></td>
           <td>First player wins</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Proof-number search</td>
           <td class="num">2016</td>
-          <td><span class="fam">chess-variant</span></td>
+          <td><span class="fam">Chess &amp; chess variants</span></td>
           <td><a href="https://content.iospress.com/articles/icga-journal/icg170017" rel="noopener">Watkins 2016</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="weak" data-search="othello abstract hiroki takizawa (preferred networks, inc.)">
+        <tr data-genre="capture" data-strength="weak" data-search="othello capture &amp; board control alpha-beta + db hiroki takizawa (preferred networks, inc.)">
           <td class="game">Othello<span class="board">8x8 (64 squares; standard cross start with 4 discs placed)</span></td>
           <td>Draw</td>
           <td><span class="badge s-weak">weak</span></td>
+          <td>Alpha-beta + DB</td>
           <td class="num">2023</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Capture &amp; board control</span></td>
           <td><a href="https://arxiv.org/abs/2310.19387" rel="noopener">Takizawa 2023</a></td>
         </tr>
-        <tr data-family="other" data-strength="strong" data-search="quarto! other luc goossens (weak solve, 1998; independently corroborated 2026) and cameron cheung / gamescrafters, uc berkeley (strong solve / full tablebase, 2023)">
+        <tr data-genre="alignment" data-strength="strong" data-search="quarto! alignment &amp; m,n,k games alpha-beta + db luc goossens (weak solve, 1998; independently corroborated 2026) and cameron cheung / gamescrafters, uc berkeley (strong solve / full tablebase, 2023)">
           <td class="game">Quarto!<span class="board">4×4 board, 16 distinct pieces (each a unique combination of 4 binary attributes; standard line-win ruleset — rows, columns, two diagonals)</span></td>
           <td>Draw</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Alpha-beta + DB</td>
           <td class="num">2023</td>
-          <td><span class="fam">other</span></td>
+          <td><span class="fam">Alignment &amp; m,n,k games</span></td>
           <td><a href="https://doi.org/10.5281/zenodo.20425801" rel="noopener">Goossens 2023</a></td>
         </tr>
-        <tr data-family="abstract" data-strength="strong" data-search="six men's morris abstract brian liou (open-source game-solver engine, 2026). no prior published solution found — first solution.">
+        <tr data-genre="morris" data-strength="strong" data-search="six men's morris morris / mill family retrograde analysis brian liou (open-source game-solver engine, 2026). no prior published solution found — first solution.">
           <td class="game">Six men's morris<span class="board">Two concentric squares (16 points) joined by lines at the four side-midpoints; no diagonals. Equivalent to the nine men's morris board with its outer ring removed. 6 men per player.
 </span></td>
           <td>Draw</td>
           <td><span class="badge s-strong">strong</span></td>
+          <td>Retrograde analysis</td>
           <td class="num">2026</td>
-          <td><span class="fam">abstract</span></td>
+          <td><span class="fam">Morris / mill family</span></td>
           <td><a href="https://github.com/brianhliou/solved-games/tree/main/engine" rel="noopener">Liou 2026</a></td>
         </tr>
     </tbody>
@@ -383,19 +419,19 @@
 
 <script>
   const rows = [...document.querySelectorAll('#registry tbody tr')];
-  const q = document.getElementById('q'), fam = document.getElementById('family'),
+  const q = document.getElementById('q'), gen = document.getElementById('genre'),
         str = document.getElementById('strength'), empty = document.getElementById('empty');
   function apply() {
-    const term = q.value.trim().toLowerCase(), f = fam.value, s = str.value;
+    const term = q.value.trim().toLowerCase(), g = gen.value, s = str.value;
     let shown = 0;
     for (const r of rows) {
       const ok = (!term || r.dataset.search.includes(term)) &&
-                 (!f || r.dataset.family === f) && (!s || r.dataset.strength === s);
+                 (!g || r.dataset.genre === g) && (!s || r.dataset.strength === s);
       r.style.display = ok ? '' : 'none'; if (ok) shown++;
     }
     empty.style.display = shown ? 'none' : 'block';
   }
-  [q, fam, str].forEach((el) => el.addEventListener('input', apply));
+  [q, gen, str].forEach((el) => el.addEventListener('input', apply));
 
   const tbody = document.querySelector('#registry tbody');
   const dir = {};

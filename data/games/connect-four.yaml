@@ -8,6 +8,7 @@ also_known_as:
   - "Captain's Mistress"
   - "Gravitrips"
 family: abstract
+genre: alignment
 board: 7x6 (7 columns wide, 6 rows high), gravity drop
 result: first-player-win
 result_detail: "First player (White / X) wins with perfect play, but only by opening in the center column; opening adjacent to center draws, and opening in an outer column loses."

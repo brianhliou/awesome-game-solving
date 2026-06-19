@@ -1,6 +1,7 @@
 id: pentago
 name: Pentago
 family: abstract
+genre: alignment
 board: 6×6 with four rotatable 3×3 quadrants
 result: first-player-win
 result_detail: "First player (white) wins with perfect play"

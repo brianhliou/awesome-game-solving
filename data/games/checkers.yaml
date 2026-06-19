@@ -5,6 +5,7 @@ also_known_as:
   - "American checkers"
   - "Straight checkers"
 family: abstract
+genre: capture
 board: 8x8 board, pieces on dark squares only (32 playable squares)
 result: draw
 result_detail: "Draw with perfect play by both sides (Black to play and draw from the standard opening)"

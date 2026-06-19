@@ -5,6 +5,7 @@ also_known_as:
   - "Stop-Gate"
   - "Dominoes (Berlekamp-Conway-Guy)"
 family: combinatorial
+genre: cgt
 board: "Square and rectangular grids; headline result is 11x11. Solved instances range from 1x1 up to 11x11 squares plus many m x n rectangles."
 result: first-player-win
 result_detail: "First player (the player to move) wins on 11x11 (and on 2x2, 3x3, 4x4, 6x6, 7x7, 8x8, 9x9, 10x10); 1x1 and 5x5 are second-player wins."

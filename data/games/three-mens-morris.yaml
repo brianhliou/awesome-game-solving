@@ -9,6 +9,7 @@ also_known_as:
   - "Alquerque de tres"
   - "Tic-tac-toe with movement"
 family: other
+genre: morris
 board: 3×3 grid of 9 points (3 horizontal + 3 vertical + 2 diagonal lines), 3 pieces per side
 result: first-player-win
 result_detail: "First player wins with perfect play, and only by opening in the centre: the centre is the unique winning first move; the four corners draw and the four edges lose. With the centre opening banned the game is a draw."

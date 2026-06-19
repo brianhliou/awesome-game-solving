@@ -8,6 +8,7 @@ also_known_as:
   - "Mühle"
   - "Mühlespiel"
 family: abstract
+genre: morris
 board: 24-point morris board (three concentric squares joined by midpoint connectors), 9 stones per player
 result: draw
 result_detail: "The initial (empty-board) position is a draw with perfect play; White (first player) cannot force a win."

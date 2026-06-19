@@ -5,6 +5,7 @@ also_known_as:
   - "R(3,3) avoidance game"
   - "Game of Sim"
 family: other
+genre: cgt
 board: "Complete graph K6 (6 vertices, 15 edges); each player colors edges in their own color"
 result: second-player-win
 result_detail: "Second player wins with perfect play (misère/avoidance: completing a monochromatic triangle in your own color loses)"

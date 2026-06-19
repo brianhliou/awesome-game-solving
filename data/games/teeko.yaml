@@ -3,6 +3,7 @@ name: Teeko
 also_known_as:
   - "Standard Teeko"
 family: other
+genre: alignment
 board: 5×5 board (25 cells); each player has 4 markers
 result: draw
 result_detail: "Standard Teeko is a draw with perfect play (neither Black nor Red can force a win)"

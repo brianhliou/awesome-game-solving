@@ -8,6 +8,7 @@ also_known_as:
   - "Squares"
   - "La Pipopipette"
 family: combinatorial
+genre: cgt
 board: "Rectangular grids, sized in boxes. Headline result is the 5x5 board (5x5 = 25 boxes, played on a 6x6 array of dots). Solved instances range from tiny boards up through 4x4 (Wilson), 4x5 (Barker & Korf) and 5x5 (Fraser)."
 result: first-player-win
 result_detail: "On the 5x5 (25-box) board the first player wins 13-12 (margin +1). Outcome is board-dependent: 4x4 and 4x5 are ties; 3x3 is a second-player win by 3."

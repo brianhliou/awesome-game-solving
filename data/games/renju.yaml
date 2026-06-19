@@ -4,6 +4,7 @@ also_known_as:
   - "Connected Pearls"
   - "Professional Gomoku"
 family: abstract
+genre: alignment
 board: 15x15 grid (stones on intersections); Black plays first and must open on the center point h8
 result: first-player-win
 result_detail: "Black (the first player) wins with perfect play, despite the forbidden-move restrictions imposed on Black"

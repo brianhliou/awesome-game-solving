@@ -5,6 +5,7 @@ also_known_as:
   - "Five-by-five Go"
   - "Small-board Go (5x5)"
 family: go
+genre: go
 board: "5x5 square Go board (25 intersections)"
 result: first-player-win
 result_detail: "Black (first player) wins by 25 points — the entire board — with the optimal opening on the center point (C3); no komi, Japanese rules"

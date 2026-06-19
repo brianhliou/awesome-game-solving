@@ -8,6 +8,7 @@ also_known_as:
   - "Take-all chess"
   - "Capture chess"
 family: chess-variant
+genre: chess
 board: Standard 8x8 chessboard, orthodox starting position; captures compulsory, non-royal king, no castling, promotion to king allowed
 result: first-player-win
 result_detail: "White (first player) wins; 1.e3 forces a win against every Black defense"

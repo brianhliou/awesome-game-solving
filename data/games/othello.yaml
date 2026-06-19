@@ -3,6 +3,7 @@ name: Othello
 also_known_as:
   - "Reversi"
 family: abstract
+genre: capture
 board: 8x8 (64 squares; standard cross start with 4 discs placed)
 result: draw
 result_detail: "Perfect play by both players leads to a draw (32-32)."

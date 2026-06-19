@@ -3,6 +3,7 @@ name: Hexapawn
 also_known_as:
   - "Hexapawn (3x3)"
 family: other
+genre: chess
 board: "3x3 (standard); generalizes to n x m rectangular boards (e.g. 4x4 'octopawn')"
 result: second-player-win
 result_detail: "Black (second player) wins with perfect play"

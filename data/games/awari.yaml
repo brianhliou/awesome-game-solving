@@ -7,6 +7,7 @@ also_known_as:
   - "Wari"
   - "Ouri"
 family: mancala
+genre: mancala
 board: 2×6 pits, 4 seeds per pit (48 seeds total)
 result: draw
 result_detail: "Either side can force a draw with optimal play (final score 24-24)"

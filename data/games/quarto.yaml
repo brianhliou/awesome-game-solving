@@ -3,6 +3,7 @@ name: Quarto!
 also_known_as:
   - "Quarto"
 family: other
+genre: alignment
 board: 4×4 board, 16 distinct pieces (each a unique combination of 4 binary attributes; standard line-win ruleset — rows, columns, two diagonals)
 result: draw
 result_detail: "Both players can force a draw with perfect play; like tic-tac-toe, perfect play always draws. The deepest forced win against imperfect play occurs at level 4+1 (5th piece placed, 6th piece gifted)."

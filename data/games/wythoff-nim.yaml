@@ -6,6 +6,7 @@ also_known_as:
   - "tsyan-shidzi (choosing/picking stones)"
   - "jiǎn shízǐ (捡石子)"
 family: combinatorial
+genre: cgt
 board: Two heaps of counters (unbounded, non-negative integer sizes)
 result: first-player-win
 result_detail: "First player wins from any starting position not on the golden-ratio P-position diagonal; the standard non-trivial start is a first-player (N-position) win"

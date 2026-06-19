@@ -5,6 +5,7 @@ also_known_as:
   - "El Juego de las Amazonas"
   - "Amazons"
 family: combinatorial
+genre: cgt
 board: "5x6 rectangular grid (headline); also solved: 4x4, 5x5, 4x5, 5x4, 4x6, 4x7, 6x4"
 result: first-player-win
 result_detail: "First player wins on 5x6 (and on 5x5, 4x5, 5x4, 4x6, 4x7); 6x4 and 4x4 are second-player wins"

@@ -4,6 +4,7 @@ also_known_as:
   - "Bouton's Nim"
   - "Normal-play Nim"
 family: combinatorial
+genre: cgt
 board: Several heaps (piles) of counters; players alternately remove one or more counters from a single heap. Classic three-heap demonstration uses heaps of 3, 5, 7.
 result: first-player-win
 result_detail: "First player wins whenever the nim-sum (XOR of heap sizes) of the starting position is non-zero, and loses iff it is zero. The classic 3-5-7 start (XOR = 1) is a first-player win; the standard demonstration position is therefore a first-player win."

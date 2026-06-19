@@ -6,6 +6,7 @@ also_known_as:
   - "Con-Tac-Tix"
   - "Polygon"
 family: connection
+genre: connection
 board: 9×9 rhombus of hexagonal cells (81 cells); two opposite sides per player, first player connects their pair; no-swap (no pie rule) ruleset
 result: first-player-win
 result_detail: "First player (Black) wins with perfect play. All 81 opening moves on the 9×9 board are now resolved: the most-central openings win for the first player, while losing openings exist near the obtuse corners — so the first player wins simply by opening on a central cell."

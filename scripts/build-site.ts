@@ -18,10 +18,11 @@ const OUT_DIR = join(ROOT, 'docs')
 
 interface Source { title: string; url: string; primary?: boolean }
 interface Game {
-  id: string; name: string; family: string
+  id: string; name: string; family: string; genre: string
   result: 'first-player-win' | 'second-player-win' | 'draw'
   strength: 'ultra-weak' | 'weak' | 'strong'
   approximate?: boolean
+  method: string[]
   board?: string; year: number | null; solved_by: string; cite?: string; verified: boolean
   sources: Source[]
 }
@@ -32,6 +33,41 @@ const RESULT_PHRASE: Record<Game['result'], string> = {
   draw: 'Draw',
 }
 const REPO = 'https://github.com/brianhliou/solved-games'
+
+// Genre display order + titles. Keep in sync with data/schema.md and build-readme.ts.
+const GENRE_ORDER: { slug: string; title: string }[] = [
+  { slug: 'alignment', title: 'Alignment & m,n,k games' },
+  { slug: 'morris', title: 'Morris / mill family' },
+  { slug: 'connection', title: 'Connection games' },
+  { slug: 'mancala', title: 'Mancala' },
+  { slug: 'capture', title: 'Capture & board control' },
+  { slug: 'chess', title: 'Chess & chess variants' },
+  { slug: 'hunt', title: 'Hunt & unequal forces' },
+  { slug: 'cgt', title: 'Combinatorial game theory' },
+  { slug: 'shogi', title: 'Shogi variants' },
+  { slug: 'go', title: 'Go' },
+  { slug: 'imperfect-info', title: 'Imperfect information' },
+]
+const GENRE_TITLE: Record<string, string> = Object.fromEntries(GENRE_ORDER.map((g) => [g.slug, g.title]))
+
+const METHOD_LABEL: Record<string, string> = {
+  'retrograde-analysis': 'Retrograde analysis',
+  'alpha-beta+db': 'Alpha-beta + DB',
+  'brute-force-enumeration': 'Brute-force enumeration',
+  'mathematical-proof': 'Mathematical proof',
+  'proof-number-search': 'Proof-number search',
+  'depth-first-pns': 'Depth-first PNS',
+  'conspiracy-number-search': 'Conspiracy-number search',
+  'threat-space-search': 'Threat-space search',
+  'knowledge-based': 'Knowledge-based',
+  'strategy-stealing/pairing-strategy': 'Strategy-stealing',
+  'monte-carlo-cfr': 'Monte-Carlo CFR',
+}
+function methodLabel(g: Game): string {
+  const m = g.method?.[0]
+  if (!m) return '—'
+  return METHOD_LABEL[m] ?? m.replace(/[-+/]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+}
 
 const esc = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -60,14 +96,17 @@ function cite(g: Game): { label: string; url: string } {
 function rowHtml(g: Game): string {
   const result = RESULT_PHRASE[g.result] + (g.approximate ? ' <span class="eps">(ε-Nash)</span>' : '')
   const strengthLabel = g.strength + (g.approximate ? ' (approx.)' : '')
+  const method = methodLabel(g)
+  const genreTitle = GENRE_TITLE[g.genre] ?? g.genre
   const { label, url } = cite(g)
-  const search = `${g.name} ${g.family} ${g.solved_by}`.toLowerCase()
-  return `        <tr data-family="${esc(g.family)}" data-strength="${g.strength}" data-search="${esc(search)}">
+  const search = `${g.name} ${genreTitle} ${method} ${g.solved_by}`.toLowerCase()
+  return `        <tr data-genre="${esc(g.genre)}" data-strength="${g.strength}" data-search="${esc(search)}">
           <td class="game">${esc(g.name)}${g.board ? `<span class="board">${esc(g.board)}</span>` : ''}</td>
           <td>${result}</td>
           <td><span class="badge s-${g.strength}">${esc(strengthLabel)}</span></td>
+          <td>${esc(method)}</td>
           <td class="num">${g.year ?? '—'}</td>
-          <td><span class="fam">${esc(g.family)}</span></td>
+          <td><span class="fam">${esc(genreTitle)}</span></td>
           <td><a href="${esc(url)}" rel="noopener">${esc(label)}</a></td>
         </tr>`
 }
@@ -76,13 +115,15 @@ function page(games: Game[]): string {
   const verified = games
     .filter((g) => g.verified)
     .sort((a, b) => (a.year ?? 0) - (b.year ?? 0) || a.name.localeCompare(b.name))
-  const families = [...new Set(verified.map((g) => g.family))].sort()
-  const famOptions = families.map((f) => `<option value="${esc(f)}">${esc(f)}</option>`).join('')
+  const presentGenres = GENRE_ORDER.filter((ge) => verified.some((g) => g.genre === ge.slug))
+  const genreOptions = presentGenres
+    .map((ge) => `<option value="${esc(ge.slug)}">${esc(ge.title)}</option>`)
+    .join('')
   const rows = verified.map(rowHtml).join('\n')
   const counts = {
     total: verified.length,
     strong: verified.filter((g) => g.strength === 'strong').length,
-    families: families.length,
+    genres: presentGenres.length,
   }
 
   return `<!doctype html>
@@ -137,7 +178,7 @@ function page(games: Game[]): string {
   <header>
     <h1>Solved Games</h1>
     <p class="tagline">The canonical reference for solved games: every known result, the method that produced it, and the code to verify it.</p>
-    <p class="meta">${counts.total} solved games · ${counts.strong} strongly solved · ${counts.families} families · citation-gated · <a href="${REPO}" rel="noopener">source &amp; contribute on GitHub →</a></p>
+    <p class="meta">${counts.total} solved games · ${counts.strong} strongly solved · ${counts.genres} genres · citation-gated · <a href="${REPO}" rel="noopener">source &amp; contribute on GitHub →</a></p>
   </header>
 
   <section class="featured">
@@ -156,8 +197,8 @@ function page(games: Game[]): string {
   </section>
 
   <div class="controls">
-    <input id="q" type="search" placeholder="Search games, solvers, families…" aria-label="Search">
-    <select id="family" aria-label="Filter by family"><option value="">All families</option>${famOptions}</select>
+    <input id="q" type="search" placeholder="Search games, solvers, methods…" aria-label="Search">
+    <select id="genre" aria-label="Filter by genre"><option value="">All genres</option>${genreOptions}</select>
     <select id="strength" aria-label="Filter by strength">
       <option value="">All strengths</option><option value="strong">Strong</option><option value="weak">Weak</option><option value="ultra-weak">Ultra-weak</option>
     </select>
@@ -166,7 +207,7 @@ function page(games: Game[]): string {
   <table id="registry">
     <thead><tr>
       <th data-sort="game">Game</th><th data-sort="result">Result</th><th data-sort="strength">Strength</th>
-      <th data-sort="year" class="num">Year</th><th data-sort="family">Family</th><th>Source</th>
+      <th data-sort="method">Method</th><th data-sort="year" class="num">Year</th><th data-sort="genre">Genre</th><th>Source</th>
     </tr></thead>
     <tbody>
 ${rows}
@@ -182,19 +223,19 @@ ${rows}
 
 <script>
   const rows = [...document.querySelectorAll('#registry tbody tr')];
-  const q = document.getElementById('q'), fam = document.getElementById('family'),
+  const q = document.getElementById('q'), gen = document.getElementById('genre'),
         str = document.getElementById('strength'), empty = document.getElementById('empty');
   function apply() {
-    const term = q.value.trim().toLowerCase(), f = fam.value, s = str.value;
+    const term = q.value.trim().toLowerCase(), g = gen.value, s = str.value;
     let shown = 0;
     for (const r of rows) {
       const ok = (!term || r.dataset.search.includes(term)) &&
-                 (!f || r.dataset.family === f) && (!s || r.dataset.strength === s);
+                 (!g || r.dataset.genre === g) && (!s || r.dataset.strength === s);
       r.style.display = ok ? '' : 'none'; if (ok) shown++;
     }
     empty.style.display = shown ? 'none' : 'block';
   }
-  [q, fam, str].forEach((el) => el.addEventListener('input', apply));
+  [q, gen, str].forEach((el) => el.addEventListener('input', apply));
 
   const tbody = document.querySelector('#registry tbody');
   const dir = {};

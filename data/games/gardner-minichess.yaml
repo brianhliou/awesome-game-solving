@@ -5,6 +5,7 @@ also_known_as:
   - "Gardner's Minichess Variant"
   - "Minichess (5x5, Gardner setup)"
 family: chess-variant
+genre: chess
 board: 5x5 (smallest board holding all standard chess piece types on the back rank)
 result: draw
 result_detail: "Draw with best play; both White and Black can force a draw"

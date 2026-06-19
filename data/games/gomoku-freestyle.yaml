@@ -5,6 +5,7 @@ also_known_as:
   - "Five in a Row (free-style)"
   - "Gobang (free-style)"
 family: abstract
+genre: alignment
 board: 15×15
 result: first-player-win
 result_detail: "First player (Black) wins"

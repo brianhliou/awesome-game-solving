@@ -5,6 +5,7 @@ also_known_as:
   - "Kalahah"
   - "Mancala (commercial Kalah variant)"
 family: mancala
+genre: mancala
 board: "Two rows of 6 holes plus two stores (kalahah); standard commercial game starts with 4 seeds per hole — Kalah(6,4). Notation Kalah(m,n) = m holes per side, n initial seeds per hole."
 result: first-player-win
 result_detail: "South (the first player) wins. Kalah(6,4) is a win by 10 (kalahah difference) under the rules of Irving et al. 2000; the same authors give Kalah(6,5) as a win by 12."

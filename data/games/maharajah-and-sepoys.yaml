@@ -7,6 +7,7 @@ also_known_as:
   - "Sarvatobhadra"
   - "The Maharaja and the Sepoys"
 family: chess-variant
+genre: hunt
 board: Standard 8x8 chessboard. Black ("sepoys") has the full orthodox 16-piece army in the normal starting position; White has a single piece, the maharajah, starting on e1, that moves on its turn as either a queen or a knight (the "amazon" compound). The maharajah is royal (must escape check); Black's pawns cannot promote in the usual rendering. No castling for the lone maharajah.
 result: second-player-win
 result_detail: "The Sepoys (Black, the player with the full army) win with correct play"

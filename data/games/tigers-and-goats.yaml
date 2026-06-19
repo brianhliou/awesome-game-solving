@@ -9,6 +9,7 @@ also_known_as:
   - "Aadu Puli Aatam"
   - "Aadu Puli"
 family: other
+genre: hunt
 board: "5x5 grid of 25 points connected by horizontal, vertical and diagonal lines (Bagh-Chal board). Asymmetric: 4 tigers (start on the 4 corner points) face up to 20 goats. Goat moves first."
 result: draw
 result_detail: "Draw under optimal play from the standard start (4 tigers on the corners, Goat to play first). Both 'Goat can at least draw' and 'Tiger can at least draw' were proved, so the game-theoretic value of the initial position is a draw."

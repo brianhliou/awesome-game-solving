@@ -3,6 +3,7 @@ name: Fanorona
 also_known_as:
   - "Fanoron-Tsivy"
 family: other
+genre: capture
 board: "5x9 (Fanoron-Tsivy), 45 intersections of lines; 22 pieces per side at start"
 result: draw
 result_detail: "Draw under optimal play from the standard starting position (White moves first)"

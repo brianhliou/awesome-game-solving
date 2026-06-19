@@ -5,6 +5,7 @@ also_known_as:
   - "Heads-up limit hold'em"
   - "Cepheus"
 family: imperfect-info
+genre: imperfect-info
 board: Two-player limit Texas hold'em; 52-card deck, four betting rounds (preflop/flop/turn/river), fixed bet sizes, capped raises per round, alternating dealer/button
 result: first-player-win
 result_detail: >

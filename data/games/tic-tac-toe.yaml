@@ -7,6 +7,7 @@ also_known_as:
   - "Terni lapilli"
   - "(3,3,3)-game"
 family: abstract
+genre: alignment
 board: 3×3 (m,n,k = 3,3,3)
 result: draw
 result_detail: "Drawn under optimal play by both sides"

@@ -8,6 +8,7 @@ One YAML file per solved game, at `games/<id>.yaml`.
 | `name` | yes | display name, with diacritics |
 | `also_known_as` | no | list of alternate names |
 | `family` | yes | abstract, chess-variant, shogi-variant, connection, go, mancala, combinatorial, imperfect-info, … |
+| `genre` | yes | grouping for the rendered tables; one of the slugs in **Genres** below. Distinct from `family` (a looser provenance tag) — `genre` is the display axis. |
 | `board` | no | size or shape (e.g. 3×4, 8×8) |
 | `result` | yes | `first-player-win` \| `second-player-win` \| `draw` |
 | `result_detail` | no | human-readable, e.g. "Gote (second player) wins" |
@@ -27,6 +28,31 @@ One YAML file per solved game, at `games/<id>.yaml`.
 | `notes` | no | anything that doesn't fit a field |
 
 Keep `verified: false` until a maintainer confirms result + year + citation.
+
+## Genres
+
+The `genre` field groups games into the sections rendered in the README (and the
+filter on the site). The slugs and their display order (familiar → frontier):
+
+| Slug | Section title |
+|---|---|
+| `alignment` | Alignment & *m,n,k* games |
+| `morris` | Morris / mill family |
+| `connection` | Connection games |
+| `mancala` | Mancala |
+| `capture` | Capture & board control |
+| `chess` | Chess & chess variants |
+| `hunt` | Hunt & unequal forces |
+| `cgt` | Combinatorial game theory |
+| `shogi` | Shogi variants |
+| `go` | Go |
+| `imperfect-info` | Imperfect information |
+
+Some games sit in two genres (e.g. Maharajah is a chess variant *and* an
+unequal-forces hunt; Amazons is territorial *and* a canonical CGT game). Pick the
+one that best places it for a reader; the choice is editorial, not load-bearing.
+A record with an unrecognized or missing `genre` renders under a trailing
+"Other" section and the build warns — so add the slug here when introducing one.
 
 For **imperfect-information** games the ultra-weak / weak / strong ladder does not
 map cleanly — position values beyond the start are not unique and outcomes are

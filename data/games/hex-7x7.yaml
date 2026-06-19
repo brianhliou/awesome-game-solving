@@ -6,6 +6,7 @@ also_known_as:
   - "Con-Tac-Tix"
   - "Polygon"
 family: connection
+genre: connection
 board: 7×7 rhombus of hexagonal cells (49 cells); each player owns two opposite sides, first player connects their pair; no-swap (no pie rule) ruleset
 result: first-player-win
 result_detail: "First player wins with perfect play. All 49 opening moves are resolved: central openings (and the obtuse-corner short diagonal) win for the first player, and a band of 14 losing openings clusters near the two acute corners (Yang et al. derived them by symmetry), so the first player wins by opening on a central cell (e.g. the centre cell d4)."

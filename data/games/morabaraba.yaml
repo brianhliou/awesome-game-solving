@@ -6,6 +6,7 @@ also_known_as:
   - "Umlabalaba"
   - "Morabaraba (South African Morris)"
 family: abstract
+genre: morris
 board: Nine Men's Morris board with the four diagonal lines added (24 points / intersections, all corners of the three nested squares connected by diagonals); 12 men per player
 result: first-player-win
 result_detail: "First-player win — the standard starting position is a win for the player to move first, with a game-theoretic value of win in 49 (moves). Most starting positions in which both players place an equal number of stones (including the standard one) are first-player wins, in contrast to Nine Men's Morris and Lasker Morris, which are draws."

@@ -6,6 +6,7 @@ also_known_as:
   - "Three-dimensional Tic-Tac-Toe"
   - "Parker Brothers Qubic"
 family: abstract
+genre: alignment
 board: 4×4×4 cube (64 cells, 76 winning lines)
 result: first-player-win
 result_detail: "First player wins"

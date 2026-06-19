@@ -5,6 +5,7 @@ also_known_as:
   - "Golomb's Pentominoes game"
   - "Competitive Pentominoes"
 family: combinatorial
+genre: cgt
 board: "8×8 board, 12 distinct (free) pentomino pieces"
 result: first-player-win
 result_detail: "First player wins with perfect play (the player who cannot move loses)."

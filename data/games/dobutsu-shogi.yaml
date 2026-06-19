@@ -5,6 +5,7 @@ also_known_as:
   - "Doubutsu Shogi"
   - "どうぶつしょうぎ"
 family: shogi-variant
+genre: shogi
 board: 3×4 (3 files × 4 ranks)
 result: second-player-win
 result_detail: "Gote (the second player, 'white') wins"

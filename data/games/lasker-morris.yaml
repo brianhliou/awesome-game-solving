@@ -5,6 +5,7 @@ also_known_as:
   - "Laskers Mühle"
   - "Ten Men's Morris"
 family: abstract
+genre: morris
 board: Nine Men's Morris board (24 points / intersections, no diagonals); 10 men per player (both Stahlhacke's headline 136-billion-position database and Gévay & Danner solve the ten-men variant, per Lasker's "nine or better ten")
 result: draw
 result_detail: "Draw with perfect play — the initial position is a draw if both sides play correctly (White moves first)"

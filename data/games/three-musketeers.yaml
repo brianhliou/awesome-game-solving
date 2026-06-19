@@ -3,6 +3,7 @@ name: Three Musketeers
 also_known_as:
   - "The Three Musketeers"
 family: other
+genre: hunt
 board: "5x5 square grid, 25 cells. Asymmetric ('unequal forces', Fox-and-Geese style): one player controls 3 musketeers (red/dark), the other controls 22 enemies (blue/light, 'Cardinal Richelieu's men'). Start: musketeers in two opposite corners and the centre; enemies fill the other 22 cells."
 result: second-player-win
 result_detail: "Win for the enemy/blue pieces (Cardinal Richelieu's men) with perfect play. The musketeers move FIRST, so the winning enemy side is the SECOND player."
