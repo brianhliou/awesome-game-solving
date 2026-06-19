@@ -104,6 +104,12 @@ function page(games: Game[]): string {
   .tagline { color:var(--muted); font-size:1.1rem; margin:0 0 1rem; max-width:60ch; }
   .meta { color:var(--muted); font-size:.9rem; margin:0 0 2rem; }
   .meta a { color:var(--link); }
+  .featured { background:var(--card); border:1px solid #d98a2b; border-radius:10px; padding:1rem 1.25rem;
+          margin:0 0 2rem; display:flex; flex-wrap:wrap; align-items:center; gap:.5rem 1rem; }
+  .featured .ftag { color:#d98a2b; font-weight:700; font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; }
+  .featured p { margin:0; flex:1; min-width:240px; }
+  .featured a.cta { background:#d98a2b; color:#1a1a1a; font-weight:700; padding:.45rem .9rem; border-radius:8px; white-space:nowrap; }
+  .featured a.cta:hover { text-decoration:none; filter:brightness(1.08); }
   .defs { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1rem 1.25rem; margin:0 0 2rem; }
   .defs h2 { font-size:1rem; margin:0 0 .5rem; }
   .defs ul { margin:0; padding-left:1.1rem; } .defs li { margin:.25rem 0; color:var(--muted); }
@@ -133,6 +139,12 @@ function page(games: Game[]): string {
     <p class="tagline">The canonical reference for solved games: every known result, the method that produced it, and the code to verify it.</p>
     <p class="meta">${counts.total} solved games · ${counts.strong} strongly solved · ${counts.families} families · citation-gated · <a href="${REPO}" rel="noopener">source &amp; contribute on GitHub →</a></p>
   </header>
+
+  <section class="featured">
+    <span class="ftag">New · original result</span>
+    <p>We strongly solved <b>six men's morris</b> — a draw over all 42,372,745 reachable positions — and built an interactive perfect-play explorer for the family.</p>
+    <a class="cta" href="./explorer/">Open the explorer →</a>
+  </section>
 
   <section class="defs">
     <h2>What "solved" means</h2>

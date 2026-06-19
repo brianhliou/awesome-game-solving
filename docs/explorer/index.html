@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morris — perfect-play tablebase explorer</title>
+    <meta
+      name="description"
+      content="Play the morris family against a perfect-play tablebase. Every position and move is labelled win, loss, or draw — the first published strong solution of six men's morris."
+    />
+    <script type="module" crossorigin src="./assets/index-BNzyxLJ7.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-u88W7akX.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <h1 id="title">Six Men's Morris</h1>
+      <span class="tagline">perfect-play tablebase explorer</span>
+      <span class="sizes" id="sizes"></span>
+      <nav class="hlinks">
+        <a href="https://github.com/brianhliou/awesome-game-solving">repo</a>
+        <a href="https://github.com/brianhliou/awesome-game-solving/tree/main/engine">engine</a>
+      </nav>
+    </header>
+
+    <div class="main">
+      <div class="left">
+        <div class="board-wrap">
+          <svg id="board" viewBox="-0.6 -0.6 7.2 7.2" aria-label="morris board"></svg>
+        </div>
+      </div>
+
+      <aside class="panel">
+        <div id="verdict" class="verdict draw">Loading tablebase…</div>
+        <div class="controls">
+          <button id="undo" disabled>← Undo</button>
+          <button id="reset">Reset</button>
+          <span class="counts" id="counts"></span>
+        </div>
+        <div class="secthdr">Moves played</div>
+        <div id="line" class="line"><span class="lempty">No moves yet.</span></div>
+        <div class="secthdr">Best moves <span class="sub-note">perfect play</span></div>
+        <div id="moves" class="moves"></div>
+        <div class="legend">
+          <span><i class="win"></i> winning</span>
+          <span><i class="draw"></i> drawing</span>
+          <span><i class="loss"></i> losing</span>
+        </div>
+        <p class="credit">
+          Strongly solved by the open-source
+          <a href="https://github.com/brianhliou/awesome-game-solving/tree/main/engine">game-solver</a>
+          engine. Standard rules, no flying.
+        </p>
+      </aside>
+    </div>
+  </body>
+</html>
