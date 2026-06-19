@@ -16,14 +16,35 @@
 //! Prior art: GamesCrafters' GamesmanClassic carries an undocumented Y solver
 //! (`mgameofy.c`, A. Esteban, 2023) that declares `kTieIsPossible = TRUE`, which is
 //! incorrect for Y. This plugin instead treats the no-draw property as a hard
-//! correctness invariant — see [`crate::reachable::ReachableSolution::count`] used
-//! against [`Outcome::Draw`] in the tests and the `y_solve` binary.
+//! correctness invariant.
+//!
+//! Two solving paths share the same rules (see the inherent methods below):
+//!   * [`RulesGame`] + `solve_reachable` — hash-map discovery, used for sides 1–5
+//!     in-core (side-5 is 3.34M reachable positions).
+//!   * [`Game`] + `solve_dense` — a tight, count-aware dense index (built on the
+//!     combinadic in [`crate::index`]) that fits side-6's 2.17B positions under a
+//!     `u32`, so the one-byte-per-index dense solver can reach it. Side-7's index
+//!     exceeds `u32`; that is the external-memory / slice target.
 
+use crate::index::{
+    mask_to_points, rank_black_in_empties, rank_subset, unrank_black_in_empties, unrank_subset,
+    Binom,
+};
 use crate::reachable::RulesGame;
-use crate::Outcome;
+use crate::{Game, Outcome};
 
 const P1: u8 = 1; // first player
 const P2: u8 = 2; // second player
+
+/// One ply-slice of the dense index: all positions with `k1` first-player and `k2`
+/// second-player stones. Sizes `white_choices = C(cells, k1)` ways to place white,
+/// each with `black_choices = C(cells - k1, k2)` ways to place black in the empties.
+struct Slice {
+    k1: usize,
+    k2: usize,
+    offset: u64,
+    black_choices: u64,
+}
 
 /// A Y board of side `n`: `n` rows, row `r` holding `r + 1` cells, `n(n+1)/2` total.
 /// Cells are indexed row-major: `idx(r, c) = r*(r+1)/2 + c` for `0 <= c <= r`.
@@ -34,6 +55,11 @@ pub struct Y {
     edge_a: u64,   // bottom row (r == n-1)
     edge_b: u64,   // left edge (c == 0)
     edge_c: u64,   // right edge (c == r)
+    // Dense-index support (built only when cells <= 32, the u32-bitboard limit the
+    // combinadic in `index.rs` uses). `slices[m]` covers the m-stone ply.
+    binom: Binom,
+    slices: Vec<Slice>,
+    num: u64,
 }
 
 /// A position: the cells each player occupies, as bitmasks over `0..cells`. The
@@ -45,8 +71,8 @@ pub struct Pos {
 }
 
 impl Y {
-    /// Build the side-`n` board: precompute the 6-neighbour hex adjacency and the
-    /// three edge masks. Limited to 64 cells (side 10) by the `u64` bitboard.
+    /// Build the side-`n` board: precompute the 6-neighbour hex adjacency, the three
+    /// edge masks, and (for `cells <= 32`) the dense-index slice table.
     pub fn new(n: usize) -> Self {
         let cells = n * (n + 1) / 2;
         assert!(cells <= 64, "Y::new: side {n} has {cells} cells, over the 64-bit board");
@@ -79,7 +105,24 @@ impl Y {
                 }
             }
         }
-        Y { n, cells, adj, edge_a, edge_b, edge_c }
+
+        // Dense-index slice table: one slice per ply m = 0..=cells, with
+        // k1 = ceil(m/2) first-player stones and k2 = floor(m/2) second-player.
+        let binom = Binom::new();
+        let mut slices = Vec::new();
+        let mut num = 0u64;
+        if cells <= 32 {
+            for m in 0..=cells {
+                let k1 = m.div_ceil(2);
+                let k2 = m / 2;
+                let white_choices = binom.c(cells, k1);
+                let black_choices = binom.c(cells - k1, k2);
+                slices.push(Slice { k1, k2, offset: num, black_choices });
+                num += white_choices * black_choices;
+            }
+        }
+
+        Y { n, cells, adj, edge_a, edge_b, edge_c, binom, slices, num }
     }
 
     fn to_move(&self, p: &Pos) -> u8 {
@@ -114,16 +157,14 @@ impl Y {
         }
         false
     }
-}
 
-impl RulesGame for Y {
-    type State = Pos;
+    // --- Shared rules, used by both the RulesGame and Game trait impls. ---
 
-    fn start(&self) -> Pos {
+    fn start_pos(&self) -> Pos {
         Pos { p1: 0, p2: 0 }
     }
 
-    fn successors(&self, p: &Pos) -> Vec<Pos> {
+    fn moves(&self, p: &Pos) -> Vec<Pos> {
         // Only called on non-terminal positions, where the board is not full, so an
         // empty cell always exists. The mover places one stone.
         let board = if self.cells == 64 {
@@ -148,7 +189,7 @@ impl RulesGame for Y {
         out
     }
 
-    fn terminal(&self, p: &Pos) -> Option<Outcome> {
+    fn outcome(&self, p: &Pos) -> Option<Outcome> {
         // The player who just moved is the only one who can have completed a
         // connection; if either colour connects, the side to move has lost. Y has
         // no draw branch.
@@ -157,5 +198,62 @@ impl RulesGame for Y {
         } else {
             None
         }
+    }
+}
+
+impl RulesGame for Y {
+    type State = Pos;
+    fn start(&self) -> Pos {
+        self.start_pos()
+    }
+    fn successors(&self, p: &Pos) -> Vec<Pos> {
+        self.moves(p)
+    }
+    fn terminal(&self, p: &Pos) -> Option<Outcome> {
+        self.outcome(p)
+    }
+}
+
+impl Game for Y {
+    type State = Pos;
+
+    fn num_states(&self) -> u64 {
+        self.num
+    }
+
+    fn index(&self, p: &Pos) -> u64 {
+        let m = (p.p1.count_ones() + p.p2.count_ones()) as usize;
+        let s = &self.slices[m];
+        let white_pts = mask_to_points(p.p1 as u32);
+        let white_rank = rank_subset(&self.binom, &white_pts);
+        let black_rank = rank_black_in_empties(&self.binom, p.p1 as u32, p.p2 as u32);
+        s.offset + white_rank * s.black_choices + black_rank
+    }
+
+    fn from_index(&self, i: u64) -> Option<Pos> {
+        // Locate the slice whose [offset, offset+size) contains i.
+        let m = match self.slices.iter().rposition(|s| s.offset <= i) {
+            Some(m) => m,
+            None => return None,
+        };
+        let s = &self.slices[m];
+        let local = i - s.offset;
+        let white_rank = local / s.black_choices;
+        let black_rank = local % s.black_choices;
+        let white_pts = unrank_subset(&self.binom, white_rank, self.cells, s.k1);
+        let white: u32 = white_pts.iter().fold(0u32, |acc, &p| acc | (1u32 << p));
+        let black =
+            unrank_black_in_empties(&self.binom, white, black_rank, self.cells, s.k2);
+        Some(Pos { p1: white as u64, p2: black as u64 })
+    }
+
+    fn start(&self) -> Pos {
+        self.start_pos()
+    }
+    fn successors(&self, p: &Pos) -> Vec<Pos> {
+        self.moves(p)
+    }
+    fn terminal(&self, p: &Pos) -> Option<Outcome> {
+        self.outcome(p)
     }
 }
