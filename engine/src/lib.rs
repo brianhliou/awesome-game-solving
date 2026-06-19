@@ -8,7 +8,9 @@
 //!
 //! This is the same shape as GAMESMAN / OpenSpiel / Ludii: one solver, many games.
 
+pub mod dense_solve;
 pub mod games;
+pub mod index;
 pub mod reachable;
 
 pub use reachable::{solve_reachable, solve_reachable_capped, ReachableSolution, RulesGame};

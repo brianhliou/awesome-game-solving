@@ -40,6 +40,11 @@ impl<S: Eq + Hash> ReachableSolution<S> {
     pub fn count(&self, outcome: Outcome) -> usize {
         self.value.values().filter(|&&v| v == outcome).count()
     }
+
+    /// Iterate every reachable position and its solved value.
+    pub fn iter(&self) -> impl Iterator<Item = (&S, Outcome)> {
+        self.value.iter().map(|(s, &o)| (s, o))
+    }
 }
 
 /// Strongly solve a game by discovering its reachable positions and running
