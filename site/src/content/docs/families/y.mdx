@@ -35,6 +35,16 @@ at every size, with no draws.
 the dense index, so its side-5 count (3,492,117) is slightly higher than the
 reachable count shown here.*
 
+## Frontier — side 7
+
+Side 6 is the largest Y solved here. **Side 7 (28 cells) is the open next
+target**, and the first that outgrows the current solver: its dense index exceeds
+2³² (an estimated ~10¹²–10¹³ positions), so it needs 64-bit indexing and a value
+table far larger than RAM. The plan is a disk-paged (external-memory) slice
+retrograde — the extension the engine is already being built toward — which would
+extend the first verified strong solution of Y one more rung. See the
+[open frontier](/frontier/).
+
 ## Play the solver
 
 Every legal move is coloured by its value under perfect play — green wins, red

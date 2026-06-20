@@ -1,20 +1,42 @@
 ---
 title: Solved Games
 description: The reference for which games are solved — by whom, how strongly, and what is left. Backed by an open-source solver that ships first-published solutions.
-template: splash
-hero:
-  tagline: Which games are solved — by whom, how strongly, and what is left. Maintained by someone who actually solves them.
-  actions:
-    - text: Browse the catalog
-      link: /games/connection/
-      icon: right-arrow
-    - text: The engine
-      link: https://github.com/brianhliou/solved-games/tree/main/engine
-      icon: external
-      variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+The reference for **which games are solved** — by whom, how strongly, and what's
+left. Maintained by someone who actually solves them: the catalog is backed by an
+open-source retrograde engine that has produced first-published strong solutions
+(six men's morris; Y through side 6), with playable perfect-play explorers that
+solve in your browser.
+
+## Start here
+
+<CardGrid>
+	<LinkCard
+		title="Browse the catalog"
+		href="/games/connection/"
+		description="38 games grouped by genre — result, strength, search-space size, who solved it, and citations."
+	/>
+	<LinkCard
+		title="Open frontier"
+		href="/frontier/"
+		description="The forward half: what isn't solved yet, what it would take, and what's out of reach and why."
+	/>
+	<LinkCard
+		title="Y — the connection family"
+		href="/families/y/"
+		description="A scaled family with a playable perfect-play explorer that solves live in your browser."
+	/>
+	<LinkCard
+		title="Morris — the mill family"
+		href="/families/morris/"
+		description="Three to twelve men's morris, with the tablebase explorer and the first published six men's solve."
+	/>
+</CardGrid>
+
+## What makes it different
 
 <CardGrid>
 	<Card title="A real reference, not a list" icon="open-book">
@@ -24,15 +46,14 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 	</Card>
 	<Card title="Backed by an engine" icon="rocket">
 		A generic retrograde-analysis solver that has produced first-published strong
-		solutions — six men's morris, and Y through side 6 — with playable
-		perfect-play explorers that solve in your browser.
+		solutions, not just a curated list — with explorers you can play.
 	</Card>
 	<Card title="The open frontier" icon="puzzle">
 		Not just what's solved, but what isn't — the next targets, what each would
 		cost in time and space, and the methods proposed. A living research agenda.
 	</Card>
 	<Card title="Corrections welcome" icon="pencil">
-		Missing a game, a citation, or spotted a wrong result? Each entry is one YAML
-		file — open an issue or a pull request.
+		Missing a game, a citation, or a wrong result? Each entry is one YAML file —
+		open an issue or a pull request.
 	</Card>
 </CardGrid>

@@ -18,7 +18,13 @@ export default defineConfig({
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/brianhliou/solved-games' },
 			],
 			sidebar: [
-				{ label: 'Overview', items: [{ label: 'Home', link: '/' }] },
+				{
+					label: 'Overview',
+					items: [
+						{ label: 'Home', link: '/' },
+						{ label: 'Open frontier', link: '/frontier/' },
+					],
+				},
 				{
 					label: 'Families',
 					items: [
