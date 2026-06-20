@@ -2,6 +2,7 @@ import "./y-style.css";
 import { yLayout, viewBox, type YLayout } from "./y-board";
 import {
   selectSide,
+  solveInfo,
   startPos,
   legalMoves,
   positionValue,
@@ -23,6 +24,7 @@ const movesEl = document.getElementById("moves")!;
 const undoBtn = document.getElementById("undo") as HTMLButtonElement;
 const resetBtn = document.getElementById("reset") as HTMLButtonElement;
 const sizesEl = document.getElementById("sizes")!;
+const solvestatEl = document.getElementById("solvestat")!;
 
 let n = 5;
 let layout: YLayout = yLayout(n);
@@ -30,6 +32,7 @@ let path: YPos[] = [];
 let ptr = 0;
 let hotMove: YMove | null = null;
 let view: { term: Val; moves: YMove[] } = { term: 3, moves: [] };
+let solveToken = 0; // bumped per solve so a stale timer/result can bail out
 
 const current = () => path[ptr];
 const popcount = (x: number) => { let c = 0; x >>>= 0; while (x) { x &= x - 1; c++; } return c; };
@@ -213,15 +216,49 @@ function buildSizes() {
   }
 }
 
+function setSizesEnabled(on: boolean) {
+  for (const b of Array.from(sizesEl.children) as HTMLButtonElement[]) b.disabled = !on;
+}
+
+const fmtSecs = (ms: number) => (ms / 1000).toFixed(ms < 1000 ? 2 : 1);
+
 async function setSide(s: number) {
   n = s;
   layout = yLayout(n);
   for (const b of Array.from(sizesEl.children) as HTMLButtonElement[]) {
     b.className = Number(b.textContent) === s ? "active" : "";
   }
-  verdictEl.className = "verdict";
-  verdictEl.textContent = "Solving…";
-  await selectSide(s);
+
+  // The whole tablebase is solved live, in a worker. Frame the wait as the demo
+  // it is: show the position count and a ticking timer while it computes.
+  const token = ++solveToken;
+  setSizesEnabled(false);
+  undoBtn.disabled = true;
+  resetBtn.disabled = true;
+  verdictEl.className = "verdict draw";
+  solvestatEl.textContent = "";
+  const startedAt = performance.now();
+  let count = 0;
+  let live = true;
+  const tick = () => {
+    if (!live || token !== solveToken) return;
+    const secs = fmtSecs(performance.now() - startedAt);
+    verdictEl.textContent = count
+      ? `Solving ${count.toLocaleString()} positions live… ${secs}s`
+      : `Solving live… ${secs}s`;
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+
+  await selectSide(s, (c) => { count = c; });
+  live = false; // stop the ticking timer now that the solve is in
+  if (token !== solveToken) return; // a newer solve superseded this one
+
+  const info = solveInfo();
+  solvestatEl.textContent =
+    `Solved live in your browser — ${info.count.toLocaleString()} positions in ${fmtSecs(info.ms)}s.`;
+  setSizesEnabled(true);
+  resetBtn.disabled = false;
   path = [startPos()];
   ptr = 0;
   hotMove = null;
@@ -234,7 +271,11 @@ async function main() {
     await setSide(5);
   } catch (e) {
     console.error("[y-explorer] load failed", e);
+    solveToken++; // stop the live timer from overwriting the error
+    verdictEl.className = "verdict loss";
     verdictEl.textContent = `Failed to load the solver: ${(e as Error).message}`;
+    solvestatEl.textContent = "";
+    setSizesEnabled(true);
   }
 }
 

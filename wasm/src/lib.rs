@@ -125,14 +125,31 @@ fn invert(v: u32) -> u32 {
     }
 }
 
-/// One Y board (the Schensted-Titus connection game), solved on construction.
+/// Number of dense-index slots for the side-`n` Y board, i.e. how many positions
+/// `solve_y` will resolve. Cheap (a few binomials) — the UI shows it before the
+/// solve starts. `f64` to stay safe past `u32`, though interactive sides fit easily.
+#[wasm_bindgen]
+pub fn y_num_states(side: usize) -> f64 {
+    Game::num_states(&Y::new(side)) as f64
+}
+
+/// Strongly solve the side-`n` Y board and return the raw per-index value bytes
+/// (`1=win 2=loss 3=draw`, one byte each). This is the heavy call; the explorer
+/// runs it inside a Web Worker so the page never blocks, then hands the bytes to
+/// [`YExplorer::from_solution`] on the main thread for synchronous probing.
+#[wasm_bindgen]
+pub fn solve_y(side: usize) -> Vec<u8> {
+    solve_dense(&Y::new(side), |_, _| {}).values
+}
+
+/// One Y board (the Schensted-Titus connection game) plus its solved value table.
 ///
-/// Y at side <= 5 is small enough (side-5 = 3.34M positions) to solve in the
-/// browser on load — so, unlike the morris explorer, no precomputed tablebase is
-/// shipped: the constructor runs the validated dense solver and the result is
-/// probed directly. The wire format is `[p1, p2]` for a position (two stone
-/// bitmasks; the side to move is derived from the counts) and groups of 3
-/// (`p1, p2, value`) for moves, value `0=win 1=loss 2=draw 3=unknown` for the mover.
+/// Y at side <= 5 is small enough (side-5 = 3.49M dense-index positions) to solve
+/// in the browser, so — unlike the morris explorer, which ships a precomputed tablebase —
+/// the table is computed live by [`solve_y`] (in a worker) and wrapped here. The
+/// wire format is `[p1, p2]` for a position (two stone bitmasks; the side to move
+/// is derived from the counts) and groups of 3 (`p1, p2, value`) for moves, value
+/// `0=win 1=loss 2=draw 3=unknown` for the mover.
 #[wasm_bindgen]
 pub struct YExplorer {
     game: Y,
@@ -141,12 +158,22 @@ pub struct YExplorer {
 
 #[wasm_bindgen]
 impl YExplorer {
-    /// Build the side-`n` board and strongly solve it (dense solver). Keep `n <= 5`
-    /// for an interactive load; larger sides are far too big to solve in-browser.
+    /// Build the side-`n` board and strongly solve it inline (dense solver). This
+    /// blocks the caller; prefer the worker path ([`solve_y`] +
+    /// [`YExplorer::from_solution`]) for interactive use. Kept as a fallback.
     #[wasm_bindgen(constructor)]
     pub fn new(side: usize) -> YExplorer {
         let game = Y::new(side);
         let sol = solve_dense(&game, |_, _| {});
+        YExplorer { game, sol }
+    }
+
+    /// Wrap a precomputed value table (from [`solve_y`], typically solved off the
+    /// main thread) into a probe-able explorer. `values` must have one byte per
+    /// dense index of the side-`n` board, exactly as `solve_y` returns.
+    pub fn from_solution(side: usize, values: Vec<u8>) -> YExplorer {
+        let game = Y::new(side);
+        let sol = DenseSolution { values, rounds: 0, terminal_wins: 0, terminal_losses: 0 };
         YExplorer { game, sol }
     }
 

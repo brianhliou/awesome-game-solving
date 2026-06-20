@@ -1,9 +1,13 @@
 //! Thin typed wrapper over the Y WASM engine. The browser does no Y rules of its
-//! own: legal moves and perfect-play values come from the validated Rust engine,
-//! which solves the chosen side in WASM on construction (side <= 5 is small enough
-//! to solve on load, so no tablebase file is shipped).
+//! own: legal moves and perfect-play values come from the validated Rust engine.
+//!
+//! The strong solve runs in a Web Worker (see `y-worker.ts`) so the page never
+//! freezes while it computes; the worker posts back the raw value table, and we
+//! wrap it here with `YExplorer.from_solution` for synchronous probing on the
+//! main thread. The whole table is recomputed live — nothing is precomputed or
+//! shipped.
 
-import init, { YExplorer } from "game-solver-wasm";
+import init, { YExplorer, y_num_states } from "game-solver-wasm";
 import wasmUrl from "game-solver-wasm/game_solver_wasm_bg.wasm?url";
 
 /** 0 win, 1 loss, 2 draw, 3 unknown (from the relevant side's perspective). */
@@ -21,20 +25,64 @@ export interface YMove {
   result: YPos;
 }
 
-let explorer: YExplorer | null = null;
-let initialized = false;
+interface SolveResult {
+  values: Uint8Array;
+  ms: number;
+}
 
-/** Build (and strongly solve, in WASM) the side-`n` board. */
-export async function selectSide(n: number): Promise<void> {
+let initialized = false;
+let explorer: YExplorer | null = null;
+let worker: Worker | null = null;
+let reqSeq = 0;
+let lastSolve = { count: 0, ms: 0 };
+const pending = new Map<number, { resolve: (r: SolveResult) => void; reject: (e: Error) => void }>();
+
+function ensureWorker(): Worker {
+  if (worker) return worker;
+  worker = new Worker(new URL("./y-worker.ts", import.meta.url), { type: "module" });
+  worker.onmessage = (ev: MessageEvent) => {
+    const d = ev.data as { id: number; values?: Uint8Array; ms?: number; error?: string };
+    const p = pending.get(d.id);
+    if (!p) return;
+    pending.delete(d.id);
+    if (d.error) p.reject(new Error(d.error));
+    else p.resolve({ values: d.values!, ms: d.ms! });
+  };
+  return worker;
+}
+
+function solveInWorker(side: number): Promise<SolveResult> {
+  const w = ensureWorker();
+  const id = ++reqSeq;
+  return new Promise((resolve, reject) => {
+    pending.set(id, { resolve, reject });
+    w.postMessage({ id, side });
+  });
+}
+
+/**
+ * Build (and strongly solve, in a worker) the side-`n` board. `onStart` fires
+ * once the position count is known but before the solve completes, so the UI can
+ * show "solving N positions…" with a live timer.
+ */
+export async function selectSide(n: number, onStart?: (count: number) => void): Promise<void> {
   if (!initialized) {
     await init({ module_or_path: wasmUrl });
     initialized = true;
   }
+  if (onStart) onStart(y_num_states(n));
+  const { values, ms } = await solveInWorker(n);
   if (explorer) {
     explorer.free();
     explorer = null;
   }
-  explorer = new YExplorer(n);
+  explorer = YExplorer.from_solution(n, values);
+  lastSolve = { count: values.length, ms };
+}
+
+/** Stats from the most recent solve: positions resolved and wall-clock ms. */
+export function solveInfo(): { count: number; ms: number } {
+  return lastSolve;
 }
 
 export function side(): number {
