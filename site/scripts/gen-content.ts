@@ -35,6 +35,7 @@ interface Game {
   year?: number | null;
   solved_by?: string;
   cite?: string;
+  distance_to_result?: string;
   verified?: boolean;
   sources?: Source[];
   resources?: { code?: Source[] };
@@ -59,6 +60,14 @@ const GENRE_LABEL: Record<string, string> = {
   shogi: "Shogi",
   "imperfect-info": "Imperfect information",
   go: "Go",
+};
+
+// Cross-links from a game's data card up to its family hub page (where one exists).
+const FAMILY_BY_ID: Record<string, { label: string; href: string }> = {
+  y: { label: "the Y connection family", href: "/families/y/" },
+};
+const FAMILY_BY_GENRE: Record<string, { label: string; href: string }> = {
+  morris: { label: "the morris (mill) family", href: "/families/morris/" },
 };
 
 const num = (n: number | null | undefined) =>
@@ -95,6 +104,12 @@ function page(g: Game): string {
     out.push("");
   }
 
+  const fam = FAMILY_BY_ID[g.id] ?? FAMILY_BY_GENRE[g.genre];
+  if (fam) {
+    out.push(`Part of ${`[${fam.label}](${fam.href})`} — see the family page for the scaling table and a playable explorer.`);
+    out.push("");
+  }
+
   out.push("## At a glance");
   out.push("");
   out.push("| | |");
@@ -121,6 +136,10 @@ function page(g: Game): string {
     out.push("");
     out.push(g.solved_by.trim());
     out.push("");
+    if (g.distance_to_result) {
+      out.push(g.distance_to_result.trim());
+      out.push("");
+    }
   }
 
   if (g.notes) {

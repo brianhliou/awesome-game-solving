@@ -25,10 +25,13 @@ The full ladder is on the [Y family page](/families/y/).
 
 ## On the radar
 
+:::caution[Targets, not claims]
+These candidates are under evaluation — each needs its citations verified before
+it becomes a full frontier entry. Only the Y target above is confirmed.
+:::
+
 Candidates where this engine could plausibly produce a new result, in rough
-priority. These are **under evaluation** — each needs its citations verified
-before it becomes a full frontier entry, so they're listed as targets, not
-claims:
+priority:
 
 - **Y** — the standout; no published *constructive* solution at any board size, and a native fit for retrograde. (Active, above.)
 - **Kōnane, narrow boards** — 3×*n* / 4×*n* / 5×*n* are named open problems in the literature, within in-core reach; a retrograde solve is methodologically distinct from the existing combinatorial-game-theory attack.
